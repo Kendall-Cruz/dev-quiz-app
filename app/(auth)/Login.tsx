@@ -26,8 +26,11 @@ const Login = () => {
         console.log('Form data:', data);
 
         const result = await login(data.email, data.password);
+
+        console.log("Resultado del login" , result)
         if (result) {
             console.log("Hola" , user?.name);
+            router.replace('/(tabs)')
         } else {
             console.log('Falló el inicio de sesión');
         }
