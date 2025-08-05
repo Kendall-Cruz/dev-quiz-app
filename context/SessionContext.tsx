@@ -24,7 +24,6 @@ interface IAuthState {
 // Contexto
 const SessionContext = createContext<IAuthState>({} as IAuthState);
 
-// Hook personalizado
 export const useSessionContext = () => useContext(SessionContext);
 
 // Proveedor
