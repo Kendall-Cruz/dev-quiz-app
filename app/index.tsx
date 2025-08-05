@@ -9,8 +9,6 @@ export default function IndexScreen() {
     const { estado } = useSessionContext();
 
     useEffect(() => {
-        if (estado === LoggStates.verifying) return;
-
 
         /* Justificación del setTimeout:
         Tuve que usar este timeout porque si intento hacer la redirección justo al montar la pantalla,

@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react";
 import { getUserById, apiLogin } from "../services/LoginService";
 import type { IUser } from "../interfaces/IUser";
+import { ILoginResponse } from "@/interfaces/ILoginResponse";
 
 export enum LoggStates {
-    'verifying' = 'verifying', 
+    'verifying' = 'verifying',
     'logged' = 'logged',
     'not logged' = 'not logged'
 }
@@ -27,20 +28,21 @@ const SessionContext = createContext<IAuthState>({} as IAuthState);
 export const useSessionContext = () => useContext(SessionContext);
 
 // Proveedor
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+export const SessionProvider = ({ children }: PropsWithChildren) => {
     // Estados del contexto
-    const [currentState, setCurrentState] = useState<LoggStates>(LoggStates.verifying); 
+    const [currentState, setCurrentState] = useState<LoggStates>(LoggStates.verifying);
     const [user, setUser] = useState<IUser>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>("");
 
 
-    const login = async (email: string, password: string): Promise<boolean> => {
+    const login = async (email: string, password: string): Promise<boolean> => { //Poner tryCatch
         setIsLoading(true);
         setError(null);
 
-        const response = await apiLogin(email, password);
+        const response:ILoginResponse = await apiLogin(email, password);
 
+        console.log( "La respuesta despues del servicio",response)
         if (response.userId) {
             const userLogin: IUser | undefined = await getUserById(response.userId);
 
@@ -55,6 +57,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             setIsLoading(false);
             return false;
         }
+
+
     };
 
     const logout = () => {
@@ -69,8 +73,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             estado: currentState,
             user: user,
             error: error,
-            isChecking: currentState === LoggStates.verifying, 
-            isLogged: currentState === LoggStates.logged, 
+            isChecking: currentState === LoggStates.verifying,
+            isLogged: currentState === LoggStates.logged,
             isLoading: isLoading,
             login,
             logout

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet , Image} from "react-native";
+import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useSessionContext } from "../../context/SessionContext";
 import { router } from "expo-router";
@@ -18,16 +18,18 @@ const Login = () => {
     });
 
 
-    const { login } = useSessionContext()
+    const { login , user} = useSessionContext()
 
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (data: any) => {
-        const result = await login(data.correo, data.password);
+        console.log('Form data:', data);
+
+        const result = await login(data.email, data.password);
         if (result) {
-            console.log("Inicio de sesión éxitoso");
+            console.log("Hola" , user?.name);
         } else {
-            console.log('Login failed');
+            console.log('Falló el inicio de sesión');
         }
     }
 
@@ -35,18 +37,17 @@ const Login = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
 
-            {/* Header with Logo */}
             <View style={styles.header}>
                 <View style={styles.logoContainer}>
-                    <Image style= {styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
+                    <Image style={styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
                 </View>
             </View>
 
-            {/* Login Form */}
+            {/* Form */}
             <View style={styles.formContainer}>
                 <Text style={styles.title}>Iniciar Sesión</Text>
 
-                {/* Email Field */}
+                {/* Correo */}
                 <View style={styles.inputGroup}>
                     <Text style={styles.label}>Correo Electrónico</Text>
                     <View style={styles.inputContainer}>
@@ -70,7 +71,7 @@ const Login = () => {
                                     placeholderTextColor="#999"
                                     keyboardType="email-address"
                                     autoCapitalize="none"
-                                    
+
                                 />
                             )}
                             name="email"
@@ -81,7 +82,7 @@ const Login = () => {
                     )}
                 </View>
 
-                {/* Password Field */}
+                {/* Contraseña */}
                 <View style={styles.inputGroup}>
                     <Text style={styles.label}>Contraseña</Text>
                     <View style={styles.inputContainer}>
@@ -91,7 +92,7 @@ const Login = () => {
                             rules={{
                                 required: 'La contraseña es requerida',
                                 minLength: {
-                                    value: 8,
+                                    value: 4,
                                     message: 'La contraseña debe tener al menos 8 caracteres',
                                 },
                             }}
@@ -132,7 +133,7 @@ const Login = () => {
                 </TouchableOpacity>
 
 
-                <TouchableOpacity onPress={() => { router.push('/(auth)/Register')}} style={styles.newAccountContainer}>
+                <TouchableOpacity onPress={() => { router.push('/(auth)/Register') }} style={styles.newAccountContainer}>
                     <Text style={styles.newAccountText}>No tienes cuenta aún? Crear cuenta</Text>
                 </TouchableOpacity>
             </View>
@@ -239,4 +240,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
 export default Login

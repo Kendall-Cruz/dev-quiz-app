@@ -7,11 +7,13 @@ import type { IUser } from '../interfaces/IUser';
 
 export const apiLogin = async (email: string, password: string): Promise<ILoginResponse> => {
   try {
+    console.log("Email en servicio: ", email)
     const response = await axios.post<ILoginResponse>('http://localhost:3000/api/users/login', {
-      //Cuerpo de la petición
       email,
       password
-    });
+    }); //Aqui puede estar el error
+
+    console.log("Respuesta dentro del servicio", response)
 
     return response.data;
   } catch (error: any) {
