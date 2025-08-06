@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const GameScreen = () => {
   return (
-    <SafeAreaView>
-      <View style={{backgroundColor: '#1E293B'}} className='h-full'> 
+    <SafeAreaView className='h-full ' style= {{backgroundColor: '#1E293B'}}>
+      <View> 
         <Text>Game</Text>
       </View>
     </SafeAreaView>

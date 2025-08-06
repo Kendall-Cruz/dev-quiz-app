@@ -28,12 +28,6 @@ const Register = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
 
-            <View style={styles.header}>
-                <View style={styles.logoContainer}>
-                    <Image style={styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
-                </View>
-            </View>
-
             {/* Form */}
             <View style={styles.formContainer}>
                 <Text style={styles.title}>Registrarse</Text>
@@ -139,7 +133,7 @@ const Register = () => {
                 <View style={styles.inputGroup}>
                     <Text style={styles.label}>Contraseña</Text>
                     <View style={styles.inputContainer}>
-                        <FontAwesome6 name="lock" size={20} color="#666" style={styles.inputIcon} />
+                        <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
                         <Controller
                             control={control}
                             rules={{
@@ -212,12 +206,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoIcon: {
-        width: 250,
-        height: 250,
+        width: 150,
+        height: 1550,
         borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 200
     },
     formContainer: {
         backgroundColor: 'white',
@@ -227,7 +221,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         minHeight: '50%',
         marginHorizontal: 15,
-        marginVertical: 40
+        marginVertical: 60
     },
     title: {
         fontSize: 24,

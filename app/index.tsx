@@ -22,7 +22,7 @@ export default function IndexScreen() {
             if (estado === LoggStates.logged) {
                 router.replace('/(tabs)');
             } else {
-                router.replace('/(auth)/Login');
+                router.replace('/(tabs)');
             }
         }, 10);
 
