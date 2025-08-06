@@ -4,6 +4,7 @@ import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, Style
 import { Ionicons } from '@expo/vector-icons';
 import { useSessionContext } from "../../context/SessionContext";
 import { router } from "expo-router";
+import { HelperText } from "react-native-paper";
 
 const Login = () => {
     const {
@@ -81,7 +82,7 @@ const Login = () => {
                         />
                     </View>
                     {errors.email && (
-                        <Text style={styles.errorText}>{errors.email.message}</Text>
+                        <HelperText type="error" style={styles.errorText}>{errors.email.message}</HelperText>
                     )}
                 </View>
 

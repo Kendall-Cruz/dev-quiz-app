@@ -6,7 +6,7 @@ const useQuiz = () => {
 
     const getCategories = async () =>{
         const categories = await getAllCategories();
-
+        console.log('categorias hook : ' , categories)
         return categories;
     }
   return (

@@ -7,8 +7,8 @@ import type { IUser } from '../interfaces/IUser';
 
 export const apiLogin = async (email: string, password: string): Promise<ILoginResponse> => {
   try {
-    console.log("Email en servicio: ", email)         //Cambie la url para que la reconozca el teléfono
-    const response = await axios.post<ILoginResponse>('http://192.168.100.5:3000/api/users/login', {
+    console.log("Email en servicio: ", email)         //Cambie la url para que la reconozca el teléfono 192.168.100.5
+    const response = await axios.post<ILoginResponse>('http://192.168.56.1:3000/api/users/login', {
       email,
       password
     }); //Aqui puede estar el error
@@ -26,7 +26,7 @@ export const apiLogin = async (email: string, password: string): Promise<ILoginR
 
 export const getUserById = async (id: string): Promise<IUser | undefined> => {
   try {
-    const response = await axios.get<IUser>(`http://192.168.100.5:3000/api/users/${id}`);
+    const response = await axios.get<IUser>(`http://192.168.56.1:3000/api/users/${id}`);
     return response.data;
   } catch (error: any) {
     console.error('Error al obtener el usuario por ID:', error.response?.data || error.message);
