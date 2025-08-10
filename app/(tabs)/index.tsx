@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSessionContext } from '@/context/SessionContext'
 import useQuiz from '@/hooks/useQuiz'
 import { ICategory } from '../../interfaces/ICategory';
-import { Searchbar} from 'react-native-paper'
+import { Searchbar } from 'react-native-paper'
+import LogoutButton from '@/components/LogoutButton'
 
 const CategoriesScreen = () => {
 
@@ -32,16 +33,24 @@ const CategoriesScreen = () => {
 
   return (
     <SafeAreaView className='h-full ' style={{ backgroundColor: '#1E293B' }}>
-      <View className='mt-10 mb-4'>
-        <Text className='text-center font-bold text-3xl text-white'>Categorías</Text>
+      <View className="mt-6 mb-4 flex-row items-center justify-between">
+        <Image
+          style={{ width: 68, height: 68 ,borderRadius: 20 }}
+          source={require('../../assets/images/Logo22.png')}
+        />
+
+        <Text className="flex-1 text-center font-bold text-3xl text-white">
+          Categorías
+        </Text>
+
+        <LogoutButton />
       </View>
       <View className='mx-7 mb-5 ' >
         <Searchbar
           placeholder="Buscar..."
           onChangeText={setBusqueda}
           value={busqueda}
-          mode='view'
-          
+
         />
       </View>
       <View>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useSessionContext } from "../../context/SessionContext";
 import { router } from "expo-router";
 import { HelperText } from "react-native-paper";
+import ErrorModal from "@/components/ErrorModal";
 
 const Login = () => {
     const {
@@ -19,21 +20,35 @@ const Login = () => {
     });
 
 
-    const { login , user} = useSessionContext()
+    const { login, user, error } = useSessionContext()
 
     const [showPassword, setShowPassword] = useState(false);
+
+    const [showErrorModal, setShowErrorModal] = useState(false);
+
+    // Mostrar modal cuando hay error
+    useEffect(() => {
+        if (error) {
+            setShowErrorModal(true);
+        }
+    }, [error]);
+
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
+    }
 
     const onSubmit = async (data: any) => {
         console.log('Form data:', data);
 
         const result = await login(data.email, data.password);
 
-        console.log("Resultado del login" , result)
+        console.log("Resultado del login", result)
         if (result) {
-            console.log("Hola" , user?.name);
+            console.log("Hola", user?.name);
             router.replace('/(tabs)')
         } else {
-            console.log('Falló el inicio de sesión');
+
+            console.log('Falló el inicio de sesión', error);
         }
     }
 
@@ -141,6 +156,13 @@ const Login = () => {
                     <Text style={styles.newAccountText}>No tienes cuenta aún? Crear cuenta</Text>
                 </TouchableOpacity>
             </View>
+            <ErrorModal
+                visible={showErrorModal}
+                onClose={closeErrorModal}
+                title="Error de Autenticación"
+                message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
+                buttonText="Entendido"
+            />
         </SafeAreaView>
     );
 }

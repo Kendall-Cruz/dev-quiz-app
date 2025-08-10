@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { FontAwesome6 } from '@expo/vector-icons';
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useSessionContext } from "@/context/SessionContext";
+import ErrorModal from "@/components/ErrorModal";
 
 const Register = () => {
 
@@ -20,9 +22,35 @@ const Register = () => {
         },
     });
 
+    const { register, message, error } = useSessionContext();
+
     const [showPassword, setShowPassword] = useState(false);
 
 
+    const [showErrorModal, setShowErrorModal] = useState(false);
+
+    // Mostrar modal cuando hay error
+    useEffect(() => {
+        if (error) {
+            setShowErrorModal(true);
+        }
+    }, [error]);
+
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
+    }
+
+    const submit = async (data: any) => {
+        console.log(data);
+        const result = await register(data.name, data.surname, data.email, data.password)
+
+        if (result) {
+            router.back();
+        } else {
+            console.log('fallo')
+            return;
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -174,7 +202,7 @@ const Register = () => {
 
                 <TouchableOpacity
                     style={styles.loginButton}
-                    onPress={handleSubmit(() =>{return})}
+                    onPress={handleSubmit(submit)}
                 >
                     <Text style={styles.loginButtonText}>Registrarse</Text>
                 </TouchableOpacity>
@@ -184,6 +212,13 @@ const Register = () => {
                     <Text style={styles.newAccountText}>Ya tengo cuenta (Iniciar sesión)</Text>
                 </TouchableOpacity>
             </View>
+            <ErrorModal
+                visible={showErrorModal}
+                onClose={closeErrorModal}
+                title="Error de Registro"
+                message={error || 'No se pudo crear tu cuenta. Por favor, verifica los datos e intenta nuevamente.'}
+                buttonText="Revisar datos"
+            />
         </SafeAreaView>
     )
 }

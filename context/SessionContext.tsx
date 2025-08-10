@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react";
-import { getUserById, apiLogin } from "../services/LoginService";
+import { getUserById, apiLogin, apiRegister } from "../services/LoginService";
 import type { IUser } from "../interfaces/IUser";
-import { ILoginResponse } from "@/interfaces/ILoginResponse";
+import { IAuthResponse } from "@/interfaces/IAuthResponse";
 
 export enum LoggStates {
     'verifying' = 'verifying',
@@ -17,8 +17,10 @@ interface IAuthState {
     isLogged: boolean,
     isLoading: boolean,
     error: string | null,
+    message: string | null,
     login: (email: string, password: string) => Promise<boolean>,
-    logout: () => void
+    logout: () => void,
+    register: (name: string , surname: string , email:string , password: string) => Promise<boolean>
 }
 
 // Contexto
@@ -33,13 +35,14 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
     const [user, setUser] = useState<IUser>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>("");
+    const [message , setMessage] = useState<string | null>("");
 
 
     const login = async (email: string, password: string): Promise<boolean> => { //Poner tryCatch
         setIsLoading(true);
         setError(null);
 
-        const response:ILoginResponse = await apiLogin(email, password);
+        const response:IAuthResponse = await apiLogin(email, password);
 
         console.log( "La respuesta despues del servicio",response)
         if (response.userId) {
@@ -60,6 +63,32 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
 
     };
 
+
+    //2 opciones 
+    // No setear el usuario desde aqui y redireccionar al login para que la persona ingrese desde ahí
+    // Setearlo desde el registro y redireccionarlo al inicio de la aplicación
+    const register = async(name: string , surname: string , email:string , password: string):Promise<boolean> => {
+        try {
+            setIsLoading(true);
+            setError(null);
+
+            const response = await apiRegister(name , surname , email , password);
+            console.log('Respuesta registro' , response) //Verificar
+
+
+            if(!response.userId){
+                setError(response.message);
+                return false
+            }else{
+                setMessage(response.message);
+                return true
+            }
+            
+        } catch (error) {
+            return false
+        }
+    }
+
     const logout = () => {
         setCurrentState(LoggStates["not logged"]);
         setIsLoading(false);
@@ -72,11 +101,13 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
             estado: currentState,
             user: user,
             error: error,
+            message: message,
             isChecking: currentState === LoggStates.verifying,
             isLogged: currentState === LoggStates.logged,
             isLoading: isLoading,
             login,
-            logout
+            logout,
+            register
         }}>
             {children}
         </SessionContext.Provider>
