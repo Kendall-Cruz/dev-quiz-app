@@ -33,7 +33,7 @@ const CategoriesScreen = () => {
 
   return (
     <SafeAreaView className='h-full ' style={{ backgroundColor: '#1E293B' }}>
-      <View className="mt-6 mb-4 flex-row items-center justify-between">
+      <View className="mt-4 mb-4 flex-row items-center justify-between">
         <Image
           style={{ width: 68, height: 68 ,borderRadius: 20 }}
           source={require('../../assets/images/Logo22.png')}
