@@ -8,7 +8,7 @@ import type { IUser } from '../interfaces/IUser';
 export const apiLogin = async (email: string, password: string): Promise<IAuthResponse> => {
   try {
     //Cambie la url para que la reconozca el teléfono 192.168.100.5
-    const response = await axios.post<IAuthResponse>('http://192.168.56.1:3000/api/users/login', {
+    const response = await axios.post<IAuthResponse>('http://http://localhost:3000/api/users/login', {
       email,
       password
     });
@@ -26,7 +26,7 @@ export const apiLogin = async (email: string, password: string): Promise<IAuthRe
 
 export const apiRegister = async (name: string, surname: string, email: string, password: string): Promise<IAuthResponse> => {
   try {
-    const response = await axios.post<IAuthResponse>('http://192.168.56.1:3000/api/users/register', {
+    const response = await axios.post<IAuthResponse>('http://http://localhost:3000/api/users/register', {
       name, surname, email, password
     })
 

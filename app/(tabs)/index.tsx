@@ -4,15 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSessionContext } from '@/context/SessionContext'
 import useQuiz from '@/hooks/useQuiz'
 import { ICategory } from '../../interfaces/ICategory';
-import { Searchbar } from 'react-native-paper'
 import LogoutButton from '@/components/LogoutButton'
+import SearchBar from '@/components/SearchBar'
 
 const CategoriesScreen = () => {
 
 
   const { user } = useSessionContext();
 
-  const { getCategoriesApi , categories } = useQuiz();
+  const { getCategoriesApi , categories , getCategoriesByName } = useQuiz();
 
 
   const [busqueda, setBusqueda] = useState('');
@@ -40,12 +40,7 @@ const CategoriesScreen = () => {
         <LogoutButton />
       </View>
       <View className='mx-7 mb-5 ' >
-        <Searchbar
-          placeholder="Buscar..."
-          onChangeText={setBusqueda}
-          value={busqueda}
-
-        />
+        <SearchBar onSearchTextChange={getCategoriesByName} />
       </View>
       <View>
         {categories && (
@@ -57,7 +52,7 @@ const CategoriesScreen = () => {
             contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 10 }}
             columnWrapperStyle={{ justifyContent: 'space-between' }}
             renderItem={({ item }) => (
-              <View className="p-4 m-2 bg-white rounded-lg shadow-lg flex-1 items-center max-w-[45%] border-cyan-500 border-4">
+              <View className="p-4 m-2 bg-cyan-100 rounded-lg shadow-lg flex-1 items-center max-w-[45%] border-cyan-500 border-4">
                 <Image
                   source={{ uri: item.icon }}
                   style={{ width: 80, height: 80, borderRadius: 12, borderBottomWidth: 1 }}
