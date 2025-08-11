@@ -1,17 +1,26 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { getAllCategories } from '@/services/CategoryService'
+import { ICategory } from '@/interfaces/ICategory'
 
 const useQuiz = () => {
 
-    const getCategories = async () =>{
-        const categories = await getAllCategories();
-        console.log('categorias hook : ' , categories)
-        return categories;
-    }
+  const [categories , setCategories] = useState<ICategory[]>()
+
+  const getCategoriesApi = async () => {
+    const categoriesResponse = await getAllCategories();
+    setCategories(categoriesResponse);
+    return categories;
+  }
+
+  const getCategoriesByName = (nombre:string) => {
+
+  }
+
   return (
     {
-        getCategories
+      getCategoriesApi,
+      categories
     }
   )
 }

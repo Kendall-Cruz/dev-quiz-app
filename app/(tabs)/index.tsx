@@ -12,21 +12,15 @@ const CategoriesScreen = () => {
 
   const { user } = useSessionContext();
 
-  const { getCategories } = useQuiz();
+  const { getCategoriesApi , categories } = useQuiz();
 
-  const [categories, setCategories] = useState<ICategory[]>()
 
   const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await getCategories();
-
-      console.log("data", data)
-
-      setCategories(data);
+      getCategoriesApi();
     };
-
     fetchCategories();
   }, []);
 

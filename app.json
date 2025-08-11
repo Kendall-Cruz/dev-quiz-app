@@ -3,7 +3,7 @@
     "name": "dev-quiz-app",
     "slug": "dev-quiz-app",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "devquizapp",
     "userInterfaceStyle": "automatic",

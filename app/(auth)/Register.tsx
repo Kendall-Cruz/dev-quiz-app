@@ -43,7 +43,7 @@ const Register = () => {
     const submit = async (data: any) => {
         console.log(data);
         const result = await register(data.name, data.surname, data.email, data.password)
-
+        console.log("resultado" , result)
         if (result) {
             router.back();
         } else {

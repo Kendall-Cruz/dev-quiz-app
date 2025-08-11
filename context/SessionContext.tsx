@@ -94,6 +94,7 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
         setIsLoading(false);
         setError(null);
         setUser(undefined);
+        console.log(user , "usurio deslogeado")
     };
 
     return (

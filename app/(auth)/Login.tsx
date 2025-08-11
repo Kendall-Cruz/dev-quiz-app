@@ -6,6 +6,7 @@ import { useSessionContext } from "../../context/SessionContext";
 import { router } from "expo-router";
 import { HelperText } from "react-native-paper";
 import ErrorModal from "@/components/ErrorModal";
+import { ScrollView } from "react-native";
 
 const Login = () => {
     const {
@@ -33,6 +34,12 @@ const Login = () => {
         }
     }, [error]);
 
+
+    //Para prueba(Borrar)
+    useEffect(() => {
+        console.log(user)
+    }, []);
+
     const closeErrorModal = () => {
         setShowErrorModal(false);
     }
@@ -53,117 +60,119 @@ const Login = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
+        <ScrollView>
+            <SafeAreaView style={styles.container}>
+                <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
 
-            <View style={styles.header}>
-                <View style={styles.logoContainer}>
-                    <Image style={styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
-                </View>
-            </View>
-
-            {/* Form */}
-            <View style={styles.formContainer}>
-                <Text style={styles.title}>Iniciar Sesión</Text>
-
-                {/* Correo */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Correo Electrónico</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="mail-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'El correo es requerido',
-                                pattern: {
-                                    value: /^\S+@\S+$/i,
-                                    message: 'Formato de correo inválido',
-                                },
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="correo@ejemplo.com"
-                                    placeholderTextColor="#999"
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-
-                                />
-                            )}
-                            name="email"
-                        />
+                <View style={styles.header}>
+                    <View style={styles.logoContainer}>
+                        <Image style={styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
                     </View>
-                    {errors.email && (
-                        <HelperText type="error" style={styles.errorText}>{errors.email.message}</HelperText>
-                    )}
                 </View>
 
-                {/* Contraseña */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Contraseña</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'La contraseña es requerida',
-                                minLength: {
-                                    value: 4,
-                                    message: 'La contraseña debe tener al menos 8 caracteres',
-                                },
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Contraseña"
-                                    placeholderTextColor="#999"
-                                    secureTextEntry={!showPassword}
-                                />
-                            )}
-                            name="password"
-                        />
-                        <TouchableOpacity
-                            style={styles.eyeIcon}
-                            onPress={() => setShowPassword(!showPassword)}
-                        >
-                            <Ionicons
-                                name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                                size={20}
-                                color="#666"
+                {/* Form */}
+                <View style={styles.formContainer}>
+                    <Text style={styles.title}>Iniciar Sesión</Text>
+
+                    {/* Correo */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Correo Electrónico</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="mail-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'El correo es requerido',
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: 'Formato de correo inválido',
+                                    },
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="correo@ejemplo.com"
+                                        placeholderTextColor="#999"
+                                        keyboardType="email-address"
+                                        autoCapitalize="none"
+
+                                    />
+                                )}
+                                name="email"
                             />
-                        </TouchableOpacity>
+                        </View>
+                        {errors.email && (
+                            <HelperText type="error" style={styles.errorText}>{errors.email.message}</HelperText>
+                        )}
                     </View>
-                    {errors.password && (
-                        <Text style={styles.errorText}>{errors.password.message}</Text>
-                    )}
+
+                    {/* Contraseña */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Contraseña</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'La contraseña es requerida',
+                                    minLength: {
+                                        value: 4,
+                                        message: 'La contraseña debe tener al menos 8 caracteres',
+                                    },
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Contraseña"
+                                        placeholderTextColor="#999"
+                                        secureTextEntry={!showPassword}
+                                    />
+                                )}
+                                name="password"
+                            />
+                            <TouchableOpacity
+                                style={styles.eyeIcon}
+                                onPress={() => setShowPassword(!showPassword)}
+                            >
+                                <Ionicons
+                                    name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                                    size={20}
+                                    color="#666"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        {errors.password && (
+                            <Text style={styles.errorText}>{errors.password.message}</Text>
+                        )}
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.loginButton}
+                        onPress={handleSubmit(onSubmit)}
+                    >
+                        <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity onPress={() => { router.push('/(auth)/Register') }} style={styles.newAccountContainer}>
+                        <Text style={styles.newAccountText}>No tienes cuenta aún? Crear cuenta</Text>
+                    </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={handleSubmit(onSubmit)}
-                >
-                    <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity onPress={() => { router.push('/(auth)/Register') }} style={styles.newAccountContainer}>
-                    <Text style={styles.newAccountText}>No tienes cuenta aún? Crear cuenta</Text>
-                </TouchableOpacity>
-            </View>
-            <ErrorModal
-                visible={showErrorModal}
-                onClose={closeErrorModal}
-                title="Error de Autenticación"
-                message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
-                buttonText="Entendido"
-            />
-        </SafeAreaView>
+                <ErrorModal
+                    visible={showErrorModal}
+                    onClose={closeErrorModal}
+                    title="Error de Autenticación"
+                    message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
+                    buttonText="Entendido"
+                />
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
