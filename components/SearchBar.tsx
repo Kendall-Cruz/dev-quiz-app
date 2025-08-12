@@ -3,7 +3,6 @@ import { View, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import useQuiz from '@/hooks/useQuiz';
 
-
 interface Props {
     onSearchTextChange: (text: string) => void;
     placeholder?: string;
@@ -16,7 +15,6 @@ const SearchBar = ({ onSearchTextChange, placeholder = "Buscar..." }: Props) => 
     const handleTextChange = (text: string) => {
         onSearchTextChange(text);
     };
-
 
     return (
         <View className="flex-row items-center bg-gray-100 rounded-md px-5 py-1 my-2.5 shadow-sm">

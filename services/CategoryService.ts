@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getAllCategories = async (): Promise<ICategory[]> => { //localhost
     try {
-        const response = await axios.get<ICategory[]>('http://localhost:3000/api/categories'); 
+        const response = await axios.get<ICategory[]>(process.env.REACT_APP_CATEGORIES_URL); 
         console.log("response",response)
         return response.data;
     } catch (error: any) {
