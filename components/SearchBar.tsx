@@ -13,7 +13,14 @@ const SearchBar = ({ onSearchTextChange, placeholder = "Buscar..." }: Props) => 
     const [searchText, setSearchText] = useState('');
 
     const handleTextChange = (text: string) => {
+        setSearchText(text); 
         onSearchTextChange(text);
+    };
+
+    const clearSearch = () => {
+        
+        setSearchText('');
+        onSearchTextChange('');
     };
 
     return (
