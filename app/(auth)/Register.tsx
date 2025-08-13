@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { FontAwesome6 } from '@expo/vector-icons';
-import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import LogoXl from "@/components/LogoXl";
+import ModalInfo from "@/components/ModalInfo";
 import { useSessionContext } from "@/context/SessionContext";
-import ErrorModal from "@/components/ErrorModal";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const Register = () => {
 
@@ -28,6 +28,7 @@ const Register = () => {
 
 
     const [showErrorModal, setShowErrorModal] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     // Mostrar modal cuando hay error
     useEffect(() => {
@@ -40,14 +41,21 @@ const Register = () => {
         setShowErrorModal(false);
     }
 
+    const closeSuccessModal = () => {
+        setShowSuccessModal(false);
+    }
+
     const submit = async (data: any) => {
         console.log(data);
         const result = await register(data.name, data.surname, data.email, data.password)
-        console.log("resultado" , result)
+        console.log("resultado", result)
         if (result) {
+            setInterval(() => {
+                setShowSuccessModal(true);
+            }, 3000);
             router.back();
         } else {
-            console.log('fallo')
+            console.log('fallo') //Borrar prueba
             return;
         }
     }
@@ -55,6 +63,7 @@ const Register = () => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
+            <LogoXl />
 
             {/* Form */}
             <View style={styles.formContainer}>
@@ -212,12 +221,21 @@ const Register = () => {
                     <Text style={styles.newAccountText}>Ya tengo cuenta (Iniciar sesión)</Text>
                 </TouchableOpacity>
             </View>
-            <ErrorModal
+            <ModalInfo
                 visible={showErrorModal}
                 onClose={closeErrorModal}
                 title="Error de Registro"
                 message={error || 'No se pudo crear tu cuenta. Por favor, verifica los datos e intenta nuevamente.'}
                 buttonText="Revisar datos"
+                icon={{ name: 'alert-circle', color: 'red' }}
+                buttonColor="red"
+            />
+            <ModalInfo
+                visible={showSuccessModal}
+                onClose={closeSuccessModal}
+                title="Usuario registrado"
+                message={"Se registro el usuario exitosamente"}
+                icon={{ name: 'information-circle', color: 'blue' }}
             />
         </SafeAreaView>
     )

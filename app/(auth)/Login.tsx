@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { SafeAreaView, StatusBar, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
+import LogoXl from "@/components/LogoXl";
+import ModalInfo from "@/components/ModalInfo";
 import { Ionicons } from '@expo/vector-icons';
-import { useSessionContext } from "../../context/SessionContext";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { HelperText } from "react-native-paper";
-import ErrorModal from "@/components/ErrorModal";
-import { ScrollView } from "react-native";
+import { useSessionContext } from "../../context/SessionContext";
 
 const Login = () => {
     const {
@@ -60,16 +60,12 @@ const Login = () => {
     }
 
     return (
-        <ScrollView>
-            <SafeAreaView style={styles.container}>
-                <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
 
-                <View style={styles.header}>
-                    <View style={styles.logoContainer}>
-                        <Image style={styles.logoIcon} source={require('../../assets/images/Logo22.png')}></Image>
-                    </View>
-                </View>
+        <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
 
+            <LogoXl/>
+            <ScrollView>
                 {/* Form */}
                 <View style={styles.formContainer}>
                     <Text style={styles.title}>Iniciar Sesión</Text>
@@ -164,15 +160,17 @@ const Login = () => {
                         <Text style={styles.newAccountText}>No tienes cuenta aún? Crear cuenta</Text>
                     </TouchableOpacity>
                 </View>
-                <ErrorModal
-                    visible={showErrorModal}
-                    onClose={closeErrorModal}
-                    title="Error de Autenticación"
-                    message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
-                    buttonText="Entendido"
-                />
-            </SafeAreaView>
-        </ScrollView>
+            </ScrollView>
+            <ModalInfo
+                visible={showErrorModal}
+                onClose={closeErrorModal}
+                title="Error de Autenticación"
+                message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
+                buttonText="Entendido"
+                icon={{name:"alert-circle" , color: 'red'}}
+                buttonColor="red" //Por defecto esta en azul
+            />
+        </SafeAreaView>
     );
 }
 
@@ -180,34 +178,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#1E293B',
-        height: '100%'
-    },
-    header: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 50,
-    },
-    logoContainer: {
-        alignItems: 'center',
-    },
-    logoIcon: {
-        width: 250,
-        height: 250,
-        borderRadius: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20
+        height: 1000
     },
     formContainer: {
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 8,
         paddingHorizontal: 20,
         paddingTop: 40,
         paddingBottom: 20,
         minHeight: '50%',
         marginHorizontal: 15,
-        marginVertical: 40
+        marginTop: 70
     },
     title: {
         fontSize: 24,

@@ -36,14 +36,6 @@ const CategoriesScreen = () => {
 
         <Text
           className="font-bold text-3xl text-white"
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            textAlign: 'center',
-            zIndex: 1,
-            pointerEvents: 'none', 
-          }}
         >
           Categorías
         </Text>

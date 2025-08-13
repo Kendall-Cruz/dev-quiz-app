@@ -9,24 +9,24 @@ const LogoutButton = () => {
 
 
     const logoutApp = () => {
-        Alert.alert(
-            'Cerrar sesión',
-            '¿Estás seguro de que quieres cerrar sesión?',
-            [
-                { text: 'Cancelar', style: 'cancel' },
-                {
-                    text: 'Confirmar',
-                    onPress: () => {
-                        logout();
-                        router.replace('/(auth)/Login');
-                    },
+        Alert.alert('Cerrar sesión', '¿Estás seguro de que quieres cerrar sesión?', [
+            { 
+                text: 'Cancelar', 
+                style: 'cancel' 
+            },
+            {
+                text: 'Confirmar',
+                onPress: () => {
+                    logout();
+                    router.replace('/(auth)/Login');
                 },
-            ]
+            },
+        ]
         );
     }
     return (
         <Pressable
-            onPress={logoutApp}
+            onPress={()=> {router.replace('/(auth)/Login')}}
             className='mx-2'
         >
             <Ionicons name="log-out-outline" size={42} color="red" />

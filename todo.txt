@@ -9,3 +9,6 @@
 
 
 
+13/8
+
+- Arreglar modales de información correcta

@@ -2,15 +2,21 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-interface ErrorModalProps {
+interface ModalProps {
     visible: boolean;
     onClose: () => void;
     title?: string;
     message?: string;
     buttonText?: string;
+    buttonColor?: string;
+    icon: {
+        name: string,
+        color: string
+    }
 }
 
-const ErrorModal = ({ visible, onClose, title, message, buttonText }: ErrorModalProps) => {
+const ModalInfo = ({ visible, onClose, title, message, buttonText, icon, buttonColor }: ModalProps) => {
+    const { name, color } = icon;
     return (
         <Modal
             animationType="fade"
@@ -21,7 +27,7 @@ const ErrorModal = ({ visible, onClose, title, message, buttonText }: ErrorModal
             <View className="flex-1 bg-black/50 justify-center items-center px-5">
                 <View className="bg-white rounded-2xl p-6 w-full max-w-sm items-center shadow-lg">
                     <View className="items-center mb-5">
-                        <Ionicons name="alert-circle" size={40} color="#e74c3c" />
+                        <Ionicons name={name as any} size={40} color={color} />
                         <Text className="text-lg font-bold text-slate-700 mt-3 text-center">
                             {title}
                         </Text>
@@ -32,7 +38,7 @@ const ErrorModal = ({ visible, onClose, title, message, buttonText }: ErrorModal
                     </Text>
 
                     <TouchableOpacity
-                        className="bg-red-500 rounded-lg py-3 px-8 min-w-[100px]"
+                        className={`rounded-lg py-3 px-8 min-w-[100px] ${buttonColor ? `bg-${buttonColor}-500` : 'bg-blue-500'}`}
                         onPress={onClose}
                     >
                         <Text className="text-white text-base font-bold text-center">
@@ -47,4 +53,5 @@ const ErrorModal = ({ visible, onClose, title, message, buttonText }: ErrorModal
 
 
 
-export default ErrorModal;
+
+export default ModalInfo;
