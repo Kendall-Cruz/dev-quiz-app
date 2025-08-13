@@ -1,0 +1,11 @@
+
+12/8
+
+- Funcionalidad opción logout { Dropdown(Stack) , Opción unica  }
+
+- Elegir tipografía titulos
+
+- Aplicar funcionalidad al listado de categorías
+
+
+

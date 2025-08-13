@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { useSessionContext } from '@/context/SessionContext'
 import { Ionicons } from '@expo/vector-icons';
@@ -9,8 +9,20 @@ const LogoutButton = () => {
 
 
     const logoutApp = () => {
-        logout();
-        router.replace('/(auth)/Login');
+        Alert.alert(
+            'Cerrar sesión',
+            '¿Estás seguro de que quieres cerrar sesión?',
+            [
+                { text: 'Cancelar', style: 'cancel' },
+                {
+                    text: 'Confirmar',
+                    onPress: () => {
+                        logout();
+                        router.replace('/(auth)/Login');
+                    },
+                },
+            ]
+        );
     }
     return (
         <Pressable

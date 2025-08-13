@@ -6,13 +6,14 @@ import useQuiz from '@/hooks/useQuiz'
 import { ICategory } from '../../interfaces/ICategory';
 import LogoutButton from '@/components/LogoutButton'
 import SearchBar from '@/components/SearchBar'
+import CategoryCard from '@/components/CategoryCard'
 
 const CategoriesScreen = () => {
 
 
   const { user } = useSessionContext();
 
-  const { getCategoriesApi , categories , getCategoriesByName } = useQuiz();
+  const { getCategoriesApi, categories, getCategoriesByName } = useQuiz();
 
 
   const [busqueda, setBusqueda] = useState('');
@@ -26,14 +27,24 @@ const CategoriesScreen = () => {
 
 
   return (
-    <SafeAreaView className='h-full ' style={{ backgroundColor: '#1E293B' }}>
-      <View className="mt-4 mb-4 flex-row items-center justify-between">
+    <SafeAreaView className='h-full' style={{ backgroundColor: '#1E293B' }}>
+      <View className="mt-4 mb-4 flex-row items-center justify-between relative">
         <Image
-          style={{ width: 68, height: 68 ,borderRadius: 20 }}
+          style={{ width: 68, height: 68, borderRadius: 20 }}
           source={require('../../assets/images/Logo22.png')}
         />
 
-        <Text className="flex-1 text-center font-bold text-3xl text-white">
+        <Text
+          className="font-bold text-3xl text-white"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            textAlign: 'center',
+            zIndex: 1,
+            pointerEvents: 'none', 
+          }}
+        >
           Categorías
         </Text>
 
@@ -51,17 +62,7 @@ const CategoriesScreen = () => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 10 }}
             columnWrapperStyle={{ justifyContent: 'space-between' }}
-            renderItem={({ item }) => (
-              <View className="p-4 m-2 bg-cyan-100 rounded-lg shadow-lg flex-1 items-center max-w-[45%] border-cyan-500 border-4">
-                <Image
-                  source={{ uri: item.icon }}
-                  style={{ width: 80, height: 80, borderRadius: 12, borderBottomWidth: 1 }}
-                  resizeMode="contain"
-                />
-                <Text className="mt-3 text-center font-bold text-lg text-gray-800">
-                  {item.category}
-                </Text>
-              </View>
+            renderItem={({ item }) => (<CategoryCard item={item} />
             )}
           />
         )}
