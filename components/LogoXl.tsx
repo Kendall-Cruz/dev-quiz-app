@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         alignItems: 'center',
+        marginTop: 10
     },
     logoIcon: {
         width: 250,

@@ -20,7 +20,8 @@ interface IAuthState {
     message: string | null,
     login: (email: string, password: string) => Promise<boolean>,
     logout: () => void,
-    register: (name: string , surname: string , email:string , password: string) => Promise<boolean>
+    register: (name: string , surname: string , email:string , password: string) => Promise<boolean>,
+    clearError:() => void,
 }
 
 // Contexto
@@ -97,6 +98,10 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
         console.log(user , "usurio deslogeado")
     };
 
+    const clearError = () => {
+        setError(null);
+    }
+
     return (
         <SessionContext.Provider value={{
             estado: currentState,
@@ -108,7 +113,8 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
             isLoading: isLoading,
             login,
             logout,
-            register
+            register,
+            clearError,
         }}>
             {children}
         </SessionContext.Provider>

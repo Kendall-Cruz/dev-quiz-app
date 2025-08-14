@@ -5,29 +5,34 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { HelperText } from "react-native-paper";
 import { useSessionContext } from "../../context/SessionContext";
+import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import { authStyles as styles } from '../../assets/styles/AuthStyles';
+
+
+
 
 const Login = () => {
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
+    const { control, handleSubmit, formState: { errors }, } = useForm({
         defaultValues: {
             email: '',
             password: '',
         },
     });
 
+    const [fontsLoaded] = useFonts({
+        Montserrat_400Regular,
+        Montserrat_700Bold,
+    });
 
-    const { login, user, error } = useSessionContext()
+
+    const { login, clearError, user, error } = useSessionContext()
 
     const [showPassword, setShowPassword] = useState(false);
 
     const [showErrorModal, setShowErrorModal] = useState(false);
 
-    // Mostrar modal cuando hay error
+
     useEffect(() => {
         if (error) {
             setShowErrorModal(true);
@@ -42,6 +47,7 @@ const Login = () => {
 
     const closeErrorModal = () => {
         setShowErrorModal(false);
+        clearError();
     }
 
     const onSubmit = async (data: any) => {
@@ -62,9 +68,8 @@ const Login = () => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
-
-            <LogoXl/>
+            <StatusBar barStyle="light-content" backgroundColor="black" />
+            <LogoXl />
             <ScrollView>
                 {/* Form */}
                 <View style={styles.formContainer}>
@@ -101,7 +106,7 @@ const Login = () => {
                             />
                         </View>
                         {errors.email && (
-                            <HelperText type="error" style={styles.errorText}>{errors.email.message}</HelperText>
+                            <Text style={styles.errorText}>{errors.email.message}</Text>
                         )}
                     </View>
 
@@ -166,96 +171,14 @@ const Login = () => {
                 onClose={closeErrorModal}
                 title="Error de Autenticación"
                 message={error || 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'}
-                buttonText="Entendido"
-                icon={{name:"alert-circle" , color: 'red'}}
-                buttonColor="red" //Por defecto esta en azul
+                buttons={[
+                    { text: 'Entendido', color: 'blue', onPress: closeErrorModal }
+                ]}
+                icon={{ name: "alert-circle", color: 'red' }}
             />
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#1E293B',
-        height: 1000
-    },
-    formContainer: {
-        backgroundColor: 'white',
-        borderRadius: 8,
-        paddingHorizontal: 20,
-        paddingTop: 40,
-        paddingBottom: 20,
-        minHeight: '50%',
-        marginHorizontal: 15,
-        marginTop: 70
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#2c3e50',
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    inputGroup: {
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#2c3e50',
-        marginBottom: 8,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        backgroundColor: '#f8f9fa',
-        paddingHorizontal: 15,
-        height: 50,
-    },
-    inputIcon: {
-        marginRight: 10,
-    },
-    textInput: {
-        flex: 1,
-        fontSize: 16,
-        color: '#2c3e50',
-        paddingVertical: 0,
-    },
-    eyeIcon: {
-        padding: 5,
-    },
-    errorText: {
-        color: '#e74c3c',
-        fontSize: 12,
-        marginTop: 5,
-    },
-    newAccountContainer: {
-        alignItems: 'center',
-        marginVertical: 30,
-    },
-    newAccountText: {
-        color: '#3498db',
-        fontSize: 14,
-        fontWeight: '500',
-    },
-    loginButton: {
-        backgroundColor: '#3498db',
-        borderRadius: 8,
-        paddingVertical: 15,
-        marginTop: 10,
-        alignItems: 'center',
-        elevation: 2,
-        shadowColor: '#3498db'
-    },
-    loginButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});
 
 export default Login

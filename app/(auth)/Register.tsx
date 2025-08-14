@@ -5,7 +5,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
+import { authStyles as styles } from '../../assets/styles/AuthStyles';
+import { replace } from "expo-router/build/global-state/routing";
 
 const Register = () => {
 
@@ -37,6 +39,11 @@ const Register = () => {
         }
     }, [error]);
 
+    useEffect(() => {
+        if (message)
+            setShowSuccessModal(true)
+    }, [message]);
+
     const closeErrorModal = () => {
         setShowErrorModal(false);
     }
@@ -50,185 +57,184 @@ const Register = () => {
         const result = await register(data.name, data.surname, data.email, data.password)
         console.log("resultado", result)
         if (result) {
-            setInterval(() => {
-                setShowSuccessModal(true);
-            }, 3000);
-            router.back();
+            console.log('se registr´o')
         } else {
             console.log('fallo') //Borrar prueba
             return;
         }
     }
 
+
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#2c3e50" />
-            <LogoXl />
-
-            {/* Form */}
-            <View style={styles.formContainer}>
-                <Text style={styles.title}>Registrarse</Text>
-
-
-                {/* Nombre */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Nombre</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="person-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'El nombre es requerido'
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Nombre"
-                                    placeholderTextColor="#999"
-                                    autoCapitalize="none"
-
-                                />
-                            )}
-                            name="name"
-                        />
-                    </View>
-                    {errors.email && (
-                        <Text style={styles.errorText}>{errors.email.message}</Text>
-                    )}
-                </View>
+            <StatusBar barStyle="light-content" backgroundColor="black" />
+            <ScrollView>
+                {/* Form */}
+                <View style={styles.formContainer}>
+                    <Text style={styles.title}>Registrarse</Text>
 
 
-                {/* Apellido */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Apellido</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="person-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'El apellido es requerido'
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Apellido"
-                                    placeholderTextColor="#999"
-                                    autoCapitalize="none"
+                    {/* Nombre */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Nombre</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="person-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'El nombre es requerido'
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Nombre"
+                                        placeholderTextColor="#999"
+                                        autoCapitalize="none"
 
-                                />
-                            )}
-                            name="surname"
-                        />
-                    </View>
-                    {errors.email && (
-                        <Text style={styles.errorText}>{errors.email.message}</Text>
-                    )}
-                </View>
-
-                {/* Correo */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Correo Electrónico</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="mail-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'El correo es requerido',
-                                pattern: {
-                                    value: /^\S+@\S+$/i,
-                                    message: 'Formato de correo inválido',
-                                },
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Correo@***.com"
-                                    placeholderTextColor="#999"
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-
-                                />
-                            )}
-                            name="email"
-                        />
-                    </View>
-                    {errors.email && (
-                        <Text style={styles.errorText}>{errors.email.message}</Text>
-                    )}
-                </View>
-
-                {/* Contraseña */}
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Contraseña</Text>
-                    <View style={styles.inputContainer}>
-                        <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'La contraseña es requerida',
-                                minLength: {
-                                    value: 4,
-                                    message: 'La contraseña debe tener al menos 8 caracteres',
-                                },
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    style={styles.textInput}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    placeholder="Contraseña"
-                                    placeholderTextColor="#999"
-                                    secureTextEntry={!showPassword}
-                                />
-                            )}
-                            name="password"
-                        />
-                        <TouchableOpacity
-                            style={styles.eyeIcon}
-                            onPress={() => setShowPassword(!showPassword)}
-                        >
-                            <Ionicons
-                                name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                                size={20}
-                                color="#666"
+                                    />
+                                )}
+                                name="name"
                             />
-                        </TouchableOpacity>
+                        </View>
+                        {errors.name && (
+                            <Text style={styles.errorText}>{errors.name.message}</Text>
+                        )}
                     </View>
-                    {errors.password && (
-                        <Text style={styles.errorText}>{errors.password.message}</Text>
-                    )}
+
+
+                    {/* Apellido */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Apellido</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="person-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'El apellido es requerido'
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Apellido"
+                                        placeholderTextColor="#999"
+                                        autoCapitalize="none"
+
+                                    />
+                                )}
+                                name="surname"
+                            />
+                        </View>
+                        {errors.surname && (
+                            <Text style={styles.errorText}>{errors.surname.message}</Text>
+                        )}
+                    </View>
+
+                    {/* Correo */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Correo Electrónico</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="mail-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'El correo es requerido',
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: 'Formato de correo inválido',
+                                    },
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Correo@***.com"
+                                        placeholderTextColor="#999"
+                                        keyboardType="email-address"
+                                        autoCapitalize="none"
+
+                                    />
+                                )}
+                                name="email"
+                            />
+                        </View>
+                        {errors.email && (
+                            <Text style={styles.errorText}>{errors.email.message}</Text>
+                        )}
+                    </View>
+
+                    {/* Contraseña */}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Contraseña</Text>
+                        <View style={styles.inputContainer}>
+                            <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'La contraseña es requerida',
+                                    minLength: {
+                                        value: 4,
+                                        message: 'La contraseña debe tener al menos 8 caracteres',
+                                    },
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <TextInput
+                                        style={styles.textInput}
+                                        onBlur={onBlur}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        placeholder="Contraseña"
+                                        placeholderTextColor="#999"
+                                        secureTextEntry={!showPassword}
+                                    />
+                                )}
+                                name="password"
+                            />
+                            <TouchableOpacity
+                                style={styles.eyeIcon}
+                                onPress={() => setShowPassword(!showPassword)}
+                            >
+                                <Ionicons
+                                    name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                                    size={20}
+                                    color="#666"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        {errors.password && (
+                            <Text style={styles.errorText}>{errors.password.message}</Text>
+                        )}
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.registerButton}
+                        onPress={handleSubmit(submit)}
+                    >
+                        <Text style={styles.registerButtonText}>Registrarse</Text>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity onPress={() => { router.push('/(auth)/Login') }} style={styles.newAccountContainer}>
+                        <Text style={styles.newAccountText}>Ya tengo cuenta (Iniciar sesión)</Text>
+                    </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={handleSubmit(submit)}
-                >
-                    <Text style={styles.loginButtonText}>Registrarse</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity onPress={() => { router.push('/(auth)/Login') }} style={styles.newAccountContainer}>
-                    <Text style={styles.newAccountText}>Ya tengo cuenta (Iniciar sesión)</Text>
-                </TouchableOpacity>
-            </View>
+            </ScrollView>
             <ModalInfo
                 visible={showErrorModal}
                 onClose={closeErrorModal}
                 title="Error de Registro"
                 message={error || 'No se pudo crear tu cuenta. Por favor, verifica los datos e intenta nuevamente.'}
-                buttonText="Revisar datos"
+                buttons={[
+                    { text: 'Revisar Datos', color: "red", onPress: closeErrorModal }
+                ]}
                 icon={{ name: 'alert-circle', color: 'red' }}
-                buttonColor="red"
             />
             <ModalInfo
                 visible={showSuccessModal}
@@ -236,6 +242,9 @@ const Register = () => {
                 title="Usuario registrado"
                 message={"Se registro el usuario exitosamente"}
                 icon={{ name: 'information-circle', color: 'blue' }}
+                buttons={[
+                    {text: 'Iniciar Sesión' , color:'blue' , onPress: () => {router.back()}}
+                ]}
             />
         </SafeAreaView>
     )
@@ -244,102 +253,3 @@ const Register = () => {
 export default Register
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#1E293B',
-    },
-    header: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 50,
-    },
-    logoContainer: {
-        alignItems: 'center',
-    },
-    logoIcon: {
-        width: 150,
-        height: 1550,
-        borderRadius: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 200
-    },
-    formContainer: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        paddingHorizontal: 20,
-        paddingTop: 40,
-        paddingBottom: 20,
-        minHeight: '50%',
-        marginHorizontal: 15,
-        marginVertical: 60
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#2c3e50',
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    inputGroup: {
-        marginBottom: 20,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#2c3e50',
-        marginBottom: 8,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 8,
-        backgroundColor: '#f8f9fa',
-        paddingHorizontal: 15,
-        height: 50,
-    },
-    inputIcon: {
-        marginRight: 10,
-    },
-    textInput: {
-        flex: 1,
-        fontSize: 16,
-        color: '#2c3e50',
-        paddingVertical: 0,
-    },
-    eyeIcon: {
-        padding: 5,
-    },
-    errorText: {
-        color: '#e74c3c',
-        fontSize: 12,
-        marginTop: 5,
-    },
-    newAccountContainer: {
-        alignItems: 'center',
-        marginVertical: 30,
-    },
-    newAccountText: {
-        color: '#3498db',
-        fontSize: 14,
-        fontWeight: '500',
-    },
-    loginButton: {
-        backgroundColor: '#3498db',
-        borderRadius: 8,
-        paddingVertical: 15,
-        marginTop: 10,
-        alignItems: 'center',
-        elevation: 2,
-        shadowColor: '#3498db'
-    },
-    loginButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});

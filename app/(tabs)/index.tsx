@@ -7,13 +7,14 @@ import { ICategory } from '../../interfaces/ICategory';
 import LogoutButton from '@/components/LogoutButton'
 import SearchBar from '@/components/SearchBar'
 import CategoryCard from '@/components/CategoryCard'
+import Header from '@/components/Header'
 
 const CategoriesScreen = () => {
 
 
   const { user } = useSessionContext();
 
-  const { getCategoriesApi, categories, getCategoriesByName } = useQuiz();
+  const { getCategoriesApi, filteredCategories, getCategoriesByName } = useQuiz();
 
 
   const [busqueda, setBusqueda] = useState('');
@@ -28,27 +29,14 @@ const CategoriesScreen = () => {
 
   return (
     <SafeAreaView className='h-full' style={{ backgroundColor: '#1E293B' }}>
-      <View className="mt-4 mb-4 flex-row items-center justify-between relative">
-        <Image
-          style={{ width: 68, height: 68, borderRadius: 20 }}
-          source={require('../../assets/images/Logo22.png')}
-        />
-
-        <Text
-          className="font-bold text-3xl text-white"
-        >
-          Categorías
-        </Text>
-
-        <LogoutButton />
-      </View>
+      <Header title='Categorías'/>
       <View className='mx-7 mb-5 ' >
         <SearchBar onSearchTextChange={getCategoriesByName} />
       </View>
       <View>
-        {categories && (
+        {filteredCategories && (
           <FlatList
-            data={categories}
+            data={filteredCategories}
             keyExtractor={(item) => item._id.toString()}
             numColumns={2}
             showsVerticalScrollIndicator={false}

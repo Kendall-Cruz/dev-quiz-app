@@ -2,38 +2,38 @@ import { View, Text } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { getAllCategories } from '@/services/CategoryService'
 import { ICategory } from '@/interfaces/ICategory'
+import { useCategoryStore } from './storage/useCategoryStore'
 
 const useQuiz = () => {
-  const [allCategories, setAllCategories] = useState<ICategory[]>([])
-  const [categories, setCategories] = useState<ICategory[]>([])
+  const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([])
+  const { categories , setCategories}  = useCategoryStore();
 
   const getCategoriesApi = async () => {
     const categoriesResponse = await getAllCategories();
-    setAllCategories(categoriesResponse);
-    setCategories(categoriesResponse);
+    setCategories(categoriesResponse); //Se setean las categorias en el estado global de zustand
+    setFilteredCategories(categoriesResponse);
   }
 
   const getCategoriesByName = useCallback( (nombre: string) => {
     
-    if (!allCategories.length) {
+    if (!categories.length) {
       return;
     }
 
     if (!nombre.trim()) {
-      setCategories(allCategories);
+      setFilteredCategories(categories);
     } else {
-      const filtered = allCategories.filter(cat =>
+      const filtered = categories.filter(cat =>
         cat.category.toLowerCase().includes(nombre.toLowerCase())
       );
-      setCategories(filtered);
+      setFilteredCategories(filtered);
     }
-  }, [allCategories]);
+  }, [categories]);
 
   return {
     getCategoriesApi,
     getCategoriesByName,
-    categories,
-    allCategories
+    filteredCategories,
   }
 }
 

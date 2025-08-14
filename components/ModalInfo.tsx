@@ -1,57 +1,89 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+
+interface ModalButton {
+    text: string;
+    color?: string;
+    onPress?: () => void;
+}
 
 interface ModalProps {
     visible: boolean;
     onClose: () => void;
     title?: string;
     message?: string;
-    buttonText?: string;
-    buttonColor?: string;
-    icon: {
-        name: string,
-        color: string
-    }
+    buttons?: ModalButton[];
+    icon?: {
+        name: string;
+        color: string;
+    };
+    closeOnBackdropPress?: boolean;
 }
 
-const ModalInfo = ({ visible, onClose, title, message, buttonText, icon, buttonColor }: ModalProps) => {
-    const { name, color } = icon;
+const ModalInfo = ({
+    visible,
+    onClose,
+    title,
+    message,
+    buttons = [{ text: 'OK', onPress: onClose }],
+    icon,
+    closeOnBackdropPress = true,
+}: ModalProps) => {
     return (
         <Modal
-            animationType="fade"
-            transparent={true}
+            animationType='fade'
+            transparent
             visible={visible}
             onRequestClose={onClose}
         >
-            <View className="flex-1 bg-black/50 justify-center items-center px-5">
-                <View className="bg-white rounded-2xl p-6 w-full max-w-sm items-center shadow-lg">
-                    <View className="items-center mb-5">
-                        <Ionicons name={name as any} size={40} color={color} />
+            <Pressable
+                className="flex-1 bg-black/50 justify-center items-center px-5"
+                onPress={closeOnBackdropPress ? onClose : undefined}
+            >
+                <Pressable
+                    className="bg-white rounded-2xl p-6 w-full max-w-sm items-center shadow-lg"
+                    onPress={(e) => e.stopPropagation()}
+                >
+                    {icon && (
+                        <Ionicons
+                            name={icon.name as any}
+                            size={40}
+                            color={icon.color || '#000'}
+                            style={{ marginLeft: 5 }}
+                        />
+                    )}
+
+                    {title && (
                         <Text className="text-lg font-bold text-slate-700 mt-3 text-center">
                             {title}
                         </Text>
-                    </View>
+                    )}
 
-                    <Text className="text-sm text-gray-600 text-center leading-5 mb-6">
-                        {message}
-                    </Text>
-
-                    <TouchableOpacity
-                        className={`rounded-lg py-3 px-8 min-w-[100px] ${buttonColor ? `bg-${buttonColor}-500` : 'bg-blue-500'}`}
-                        onPress={onClose}
-                    >
-                        <Text className="text-white text-base font-bold text-center">
-                            {buttonText}
+                    {message && (
+                        <Text className="text-sm text-gray-600 text-center leading-5 mt-3 mb-6">
+                            {message}
                         </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                    )}
+
+                    <View className="flex-row gap-3">
+                        {buttons.map((btn, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                className={`rounded-lg py-3 px-5 flex-1 bg-gray-200 ${btn.color ? `bg-${btn.color}-500` : 'bg-red-500'
+                                    }`}
+                                onPress={btn.onPress}
+                            >
+                                <Text className="text-black text-center font-bold">
+                                    {btn.text}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </Pressable>
+            </Pressable>
         </Modal>
     );
 };
-
-
-
 
 export default ModalInfo;
