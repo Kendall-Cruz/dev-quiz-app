@@ -3,7 +3,7 @@ import React from 'react'
 import LogoutButton from './LogoutButton'
 
 interface HeaderProps {
-    title: string
+    title?: string
 }
 
 const Header = ({ title }: HeaderProps) => {

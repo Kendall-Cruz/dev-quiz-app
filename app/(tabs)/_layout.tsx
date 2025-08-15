@@ -1,33 +1,36 @@
-import { Tabs } from 'expo-router';
+import { Stack, Tabs } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome6'
 import { Image, StyleSheet, Text } from 'react-native';
 
 export default function TabsLayout() {
     return (
-        <Tabs screenOptions={{
-            headerShown: false,
-            tabBarActiveTintColor: 'white',
-            tabBarStyle: styles.tabBarStyle,
-            tabBarLabelStyle: styles.tabBarLabelStyle,
-            tabBarIconStyle: styles.tabBarIconStyle
+        <>
+            <Tabs screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: 'white',
+                tabBarStyle: styles.tabBarStyle,
+                tabBarLabelStyle: styles.tabBarLabelStyle,
+                tabBarIconStyle: styles.tabBarIconStyle
 
-        }} >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: 'Categorías',
+            }} >
+                <Tabs.Screen
+                    name="index"
+                    options={{
+                        title: 'Categorías',
+                        tabBarIcon: ({ focused }) => {
+                            return <Image source={require('../../assets/images/logoCategorias2-.png')} style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }, { transform: [{ scale: focused ? 1.1 : 1 }] }]} />;
+                        }
+                    }}
+                />
+                <Tabs.Screen name="(game)" options={{
+                    title: 'Quiz',
                     tabBarIcon: ({ focused }) => {
-                        return <Image source={require('../../assets/images/logoCategorias2-.png')} style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }, { transform: [{ scale: focused ? 1.1 : 1 }] }]} />;
+                        return <Image source={require('../../assets/images/LogoGame-.png')} style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }, { transform: [{ scale: focused ? 1.1 : 1 }] }]} />;
                     }
-                }}
-            />
-            <Tabs.Screen name="GameScreen" options={{
-                title: 'Quiz',
-                tabBarIcon: ({ focused }) => {
-                    return <Image source={require('../../assets/images/LogoGame-.png')} style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }, { transform: [{ scale: focused ? 1.1 : 1 }] }]} />;
-                }
-            }} />
-        </Tabs>
+                }} />
+            </Tabs>
+        </>
+
     );
 }
 const styles = StyleSheet.create({

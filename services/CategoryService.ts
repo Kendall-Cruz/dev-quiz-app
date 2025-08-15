@@ -12,3 +12,4 @@ export const getAllCategories = async (): Promise<ICategory[]> => { //localhost
         return []
     }
 }
+
