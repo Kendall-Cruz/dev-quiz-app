@@ -6,6 +6,8 @@ import { Controller, useForm } from 'react-hook-form'
 import { Picker } from '@react-native-picker/picker';
 import { useCategoryStore } from '@/hooks/storage/useCategoryStore'
 import { getQuestionsByCategoryLevel } from '@/services/QuestionService'
+import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
+import { router } from 'expo-router'
 
 const GameConfig = () => {
 
@@ -17,14 +19,15 @@ const GameConfig = () => {
     });
 
     const { categories } = useCategoryStore()
-
+    const {setQuestionsFiltered} = useQuestionStore();
 
     const onSubmit = async (data: any) => {
         console.log(data);
-        const respuests = await getQuestionsByCategoryLevel(data.category , data.difficulty);
+        const filteredQuestions = await getQuestionsByCategoryLevel(data.category , data.difficulty);
 
-        console.log(respuests);
+        setQuestionsFiltered(filteredQuestions)
 
+        router.push('/GameScreen')
     };
 
     return (

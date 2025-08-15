@@ -1,14 +1,14 @@
 
 12/8
 
-- Funcionalidad opción logout { Dropdown(Stack) , Opción unica  }
+
 
 - Elegir tipografía titulos
 
-- Aplicar funcionalidad al listado de categorías
 
 
 
 14/8
 
--Bug visual icono registro
+15/8
+Solucionar que no salga gameScreen en las tabns

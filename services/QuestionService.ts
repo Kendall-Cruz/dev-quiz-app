@@ -6,7 +6,6 @@ export const getQuestionsByCategoryLevel = async (categoryId: string, level: str
         console.log(categoryId, level);
         const url = `${process.env.EXPO_PUBLIC_QUESTIONS}/category/${categoryId}/level/${level}`;
         console.log(url);
-        // Usa la variable `url` que ya construiste
         const response = await axios.get(url); 
         console.log("response", response);
         return response.data;

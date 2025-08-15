@@ -22,12 +22,19 @@ export default function TabsLayout() {
                         }
                     }}
                 />
-                <Tabs.Screen name="(game)" options={{
+                <Tabs.Screen name="GameConfig" options={{
                     title: 'Quiz',
                     tabBarIcon: ({ focused }) => {
                         return <Image source={require('../../assets/images/LogoGame-.png')} style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }, { transform: [{ scale: focused ? 1.1 : 1 }] }]} />;
                     }
                 }} />
+                <Tabs.Screen
+                    name="GameScreen"
+                    options={{
+                        href: null, // Esto oculta la pestaña
+                    }}
+                />
+
             </Tabs>
         </>
 
