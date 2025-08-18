@@ -7,6 +7,7 @@ import { IQuestion } from '../interfaces/IQuestion';
 import { goBack } from 'expo-router/build/global-state/routing';
 import { Audio } from 'expo-av'
 import ModalInfo from '@/components/ModalInfo';
+import { shuffleArray } from '@/helpers/arrayShuffle';
 
 const GameScreen = () => {
     const { questionsFiltered } = useQuestionStore()
@@ -25,9 +26,17 @@ const GameScreen = () => {
         if (questionsFiltered) {
             if (questionCounter >= 20) {
                 Alert.alert("se acabaron las preguntas");
-                router.replace('/(tabs)/GameConfig')
+                router.replace('/(tabs)/GameConfig');
+                return
             }
-            setCurrentQuestion(questionsFiltered[questionCounter - 1]);
+            const question = questionsFiltered[questionCounter - 1];
+
+            const shuffledOptions = shuffleArray(question.options);
+            setCurrentQuestion({
+                ...question,
+                options: shuffledOptions,
+            })
+
             setSelectedOption(null);
         }
         return
@@ -90,6 +99,7 @@ const GameScreen = () => {
                     <Text className='text-white font-medium'>← Volver</Text>
                 </Pressable>
 
+
                 <View className="flex-row justify-between w-full px-4 mb-6 mt-6">
                     <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
                         <Text className="text-white text-lg">Modo: <Text className="font-bold">Fácil</Text></Text>
@@ -130,6 +140,9 @@ const GameScreen = () => {
                 })}
 
 
+            </View>
+            <View className='mt-5'>
+                <Text className="text-white text-lg text-center">Pregunta {questionCounter} de {questionsFiltered.length}</Text>
             </View>
             <ModalInfo visible={false} onClose={function (): void {
                 throw new Error('Function not implemented.');
