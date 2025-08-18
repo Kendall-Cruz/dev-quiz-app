@@ -8,6 +8,7 @@ import { useCategoryStore } from '@/hooks/storage/useCategoryStore'
 import { getQuestionsByCategoryLevel } from '@/services/QuestionService'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
+import { shuffleArray } from '../../helpers/arrayShuffle';
 
 const GameConfig = () => {
 
@@ -22,10 +23,9 @@ const GameConfig = () => {
     const {setQuestionsFiltered} = useQuestionStore();
 
     const onSubmit = async (data: any) => {
-        console.log(data);
         const filteredQuestions = await getQuestionsByCategoryLevel(data.category , data.difficulty);
 
-        setQuestionsFiltered(filteredQuestions)
+        setQuestionsFiltered(shuffleArray(filteredQuestions))
 
         router.push('/GameScreen')
     };

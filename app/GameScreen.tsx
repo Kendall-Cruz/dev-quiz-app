@@ -1,44 +1,81 @@
+
 import { View, Text, SafeAreaView, BackHandler, Alert, TouchableOpacity, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
 import { IQuestion } from '../interfaces/IQuestion';
 import { goBack } from 'expo-router/build/global-state/routing';
+import { Audio } from 'expo-av'
+import ModalInfo from '@/components/ModalInfo';
 
 const GameScreen = () => {
     const { questionsFiltered } = useQuestionStore()
     const [currentQuestion, setCurrentQuestion] = useState<IQuestion | null>(null);
     const [questionCounter, setQuestionCounter] = useState(1)
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(0);
+    const [showModalInfo, setShowModalInfo] = useState(false);
+    const [selectedOption, setSelectedOption] = useState<string | null>(null)
+    //sonidos
+    const [correctSound, setCorrectSound] = useState<Audio.Sound | null>(null);
+    const [wrongSound, setWrongSound] = useState<Audio.Sound | null>(null);
 
 
     useEffect(() => {
 
         if (questionsFiltered) {
             if (questionCounter >= 20) {
-                Alert.alert("se acabarpm las preguntas")
+                Alert.alert("se acabaron las preguntas");
+                router.replace('/(tabs)/GameConfig')
             }
             setCurrentQuestion(questionsFiltered[questionCounter - 1]);
+            setSelectedOption(null);
         }
-
         return
-
-
     }, [questionCounter])
 
 
-    const checkAnswer = (answer: string) => {
+
+
+    useEffect(() => {
+
+        const loadSounds = async () => {
+            const { sound: soundCorrect } = await Audio.Sound.createAsync(
+                require('../assets/sounds/correct_answer-.mp3')
+            );
+            const { sound: soundWrong } = await Audio.Sound.createAsync(
+                require('../assets/sounds/wrong_answer-.mp3')
+            );
+
+            setCorrectSound(soundCorrect);
+            setWrongSound(soundWrong);
+        };
+
+        loadSounds();
+
+
+        return () => {
+            correctSound && correctSound.unloadAsync();
+            wrongSound && wrongSound.unloadAsync();
+        };
+    }, []);
+
+    const checkAnswer = async (answer: string) => {
+        if (!currentQuestion) return
+
+        setSelectedOption(answer);
+
         if (answer) {
             if (answer === currentQuestion?.correctAnswer) {
-                Alert.alert('Respuesta correcta')
+                await correctSound?.replayAsync();
                 setScore(score + 1)
-                setQuestionCounter(questionCounter + 1);
-
             }
             else {
-                Alert.alert('Respuesta incorrecta')
-                setQuestionCounter(questionCounter + 1);
+                await wrongSound?.replayAsync();
             }
+
+            setTimeout(() => {
+                setQuestionCounter(questionCounter + 1);
+            }, 2000);
         }
     }
 
@@ -68,23 +105,36 @@ const GameScreen = () => {
                     </Text>
                 </View>
 
-                {currentQuestion?.options && currentQuestion.options.map((option, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        className="bg-sky-50 hover:bg-slate-600 rounded-xl py-5 px-6 mt-5 mb-3 w-full shadow-md border border-slate-600 active:scale-98 transition-all"
-                        onPress={() => checkAnswer(option)}
-                    >
-                        <Text className="text-black text-center font-medium text-base">{option}</Text>
-                    </TouchableOpacity>
-                ))}
+                {currentQuestion?.options && currentQuestion.options.map((option, index) => {
 
-                <TouchableOpacity
-                    className="bg-blue-600 hover:bg-blue-700 rounded-xl py-5 px-6 mb-3 w-full shadow-md active:scale-98 transition-all"
-                    onPress={() => setQuestionCounter(questionCounter + 1)}
-                >
-                    <Text className="text-white text-center font-semibold">Next Question</Text>
-                </TouchableOpacity>
+                    let optionStyle = "bg-sky-50 border border-slate-600";
+                    if (selectedOption) {
+                        if (option === currentQuestion.correctAnswer) {
+                            optionStyle = "bg-green-500 border-green-700"; // correcta en verde
+                        } else if (option === selectedOption) {
+                            optionStyle = "bg-red-500 border-red-700"; // incorrecta seleccionada en rojo
+                        } else {
+                            optionStyle = "bg-gray-200 border-gray-400"; // las demás en gris apagado
+                        }
+                    }
+                    return (
+                        <TouchableOpacity
+                            key={index}
+                            disabled={!!selectedOption} // deshabilitar botones después de elegir
+                            className={`rounded-xl py-5 px-6 mt-5 mb-3 w-full shadow-md ${optionStyle}`}
+                            onPress={() => checkAnswer(option)}
+                        >
+                            <Text className="text-black text-center font-medium text-base">{option}</Text>
+                        </TouchableOpacity>
+                    )
+                })}
+
+
             </View>
+            <ModalInfo visible={false} onClose={function (): void {
+                throw new Error('Function not implemented.');
+            }} />
+
         </SafeAreaView>
     )
 }

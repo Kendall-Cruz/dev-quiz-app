@@ -30,6 +30,8 @@ const useQuiz = () => {
     }
   }, [categories]);
 
+  
+
   return {
     getCategoriesApi,
     getCategoriesByName,
