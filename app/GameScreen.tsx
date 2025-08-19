@@ -8,9 +8,10 @@ import { goBack } from 'expo-router/build/global-state/routing';
 import { Audio } from 'expo-av'
 import ModalInfo from '@/components/ModalInfo';
 import { shuffleArray } from '@/helpers/arrayShuffle';
+import ModalGameResult from '@/components/ModalGameResult';
 
 const GameScreen = () => {
-    const { questionsFiltered } = useQuestionStore()
+    const { questionsFiltered, setQuestionsFiltered } = useQuestionStore()
     const [currentQuestion, setCurrentQuestion] = useState<IQuestion | null>(null);
     const [questionCounter, setQuestionCounter] = useState(1)
     const [score, setScore] = useState(0);
@@ -24,11 +25,11 @@ const GameScreen = () => {
     useEffect(() => {
 
         if (questionsFiltered) {
-            if (questionCounter >= 20) {
-                Alert.alert("se acabaron las preguntas");
-                router.replace('/(tabs)/GameConfig');
-                return
+            if (questionCounter > questionsFiltered.length) {
+                setShowModalInfo(true);
+                return;
             }
+            console.log(questionsFiltered.length);
             const question = questionsFiltered[questionCounter - 1];
 
             const shuffledOptions = shuffleArray(question.options);
@@ -41,9 +42,6 @@ const GameScreen = () => {
         }
         return
     }, [questionCounter])
-
-
-
 
     useEffect(() => {
 
@@ -88,6 +86,20 @@ const GameScreen = () => {
         }
     }
 
+    const onPressModalButton = () => {
+        cleanGame();
+        setShowModalInfo(false);
+        router.replace('/(tabs)/GameConfig');
+    }
+
+    const cleanGame = () => {
+        setScore(0)
+        setQuestionsFiltered([])
+        setQuestionCounter(1)
+        setCurrentQuestion(null)
+    }
+
+
 
     return (
         <SafeAreaView className='h-full bg-[#1E293B]'>
@@ -120,11 +132,11 @@ const GameScreen = () => {
                     let optionStyle = "bg-sky-50 border border-slate-600";
                     if (selectedOption) {
                         if (option === currentQuestion.correctAnswer) {
-                            optionStyle = "bg-green-500 border-green-700"; // correcta en verde
+                            optionStyle = "bg-green-500 border-green-700"; // correcta verde
                         } else if (option === selectedOption) {
-                            optionStyle = "bg-red-500 border-red-700"; // incorrecta seleccionada en rojo
+                            optionStyle = "bg-red-500 border-red-700"; // incorrecta  rojo
                         } else {
-                            optionStyle = "bg-gray-200 border-gray-400"; // las demás en gris apagado
+                            optionStyle = "bg-gray-200 border-gray-400"; // las demás gris 
                         }
                     }
                     return (
@@ -141,12 +153,18 @@ const GameScreen = () => {
 
 
             </View>
-            <View className='mt-5'>
-                <Text className="text-white text-lg text-center">Pregunta {questionCounter} de {questionsFiltered.length}</Text>
+            <View className='mt-8'>
+                <Text className="text-white text-lg text-center">Pregunta  <Text className='text-green-300'>{questionCounter}</Text>  de  {questionsFiltered.length}</Text>
             </View>
-            <ModalInfo visible={false} onClose={function (): void {
-                throw new Error('Function not implemented.');
-            }} />
+            <ModalGameResult
+                correctAnswers={score}
+                wrongAnswers={questionsFiltered.length - score}
+                visible={showModalInfo} title='Resultados'
+                message='Has finalizado todas las preguntas, estos son los resultados'
+                buttonText='Regresar'
+                onPressButton={onPressModalButton} >
+
+            </ModalGameResult>
 
         </SafeAreaView>
     )
