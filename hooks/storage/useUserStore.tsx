@@ -2,7 +2,12 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { IUser } from "@/interfaces/IUser";
-import { LoggStates } from "@/context/SessionContext";
+
+ enum LoggStates {
+    'verifying' = 'verifying',
+    'logged' = 'logged',
+    'not logged' = 'not logged'
+}
 
 
 interface IUserStore {
