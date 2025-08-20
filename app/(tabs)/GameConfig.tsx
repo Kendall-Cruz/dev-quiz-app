@@ -50,7 +50,7 @@ const GameConfig = () => {
                                     onValueChange={(itemValue) => onChange(itemValue)}
                                 >
                                     <Picker.Item label="Selecciona la categoría" value="" />
-                                    {categories.map((cat) => <Picker.Item label={cat.category} value={cat._id} style={{ fontWeight: 'bold' }} />)}
+                                    {categories.map((cat) => <Picker.Item key={cat._id} label={cat.category} value={cat._id} style={{ fontWeight: 'bold' }} />)}
                                 </Picker>
                             </View>
                         )}

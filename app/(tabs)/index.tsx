@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, Pressable } from 'react-native';
+import { View, Text, Image, FlatList, Pressable , ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSessionContext } from '@/context/SessionContext'
@@ -9,6 +9,7 @@ import SearchBar from '@/components/SearchBar'
 import CategoryCard from '@/components/CategoryCard'
 import Header from '@/components/Header'
 import { useUserStore } from '@/hooks/storage/useUserStore';
+import * as Animatable from "react-native-animatable";
 
 const CategoriesScreen = () => {
 
@@ -35,7 +36,7 @@ const CategoriesScreen = () => {
             <View className='mx-7 mb-5 ' >
                 <SearchBar onSearchTextChange={getCategoriesByName} />
             </View>
-            <View>
+            <ScrollView>
                 {filteredCategories && (
                     <FlatList
                         data={filteredCategories}
@@ -44,12 +45,21 @@ const CategoriesScreen = () => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 10 }}
                         columnWrapperStyle={{ justifyContent: 'space-between' }}
-                        renderItem={({ item }) => (<CategoryCard item={item} />
+                        renderItem={({ item, index }) => (
+                            <Animatable.View
+                                key={item.category}
+                                animation="bounceIn"
+                                duration={600}
+                                delay={index * 100}
+                                useNativeDriver
+                                className="p-4 m-2 bg-slate-50 rounded-lg shadow-lg flex-1 items-center max-w-[45%] border-cyan-500 border-4" >
+                                <CategoryCard item={item} />
+                            </Animatable.View>
                         )}
                     />
                 )}
 
-            </View>
+            </ScrollView>
 
         </SafeAreaView>
 

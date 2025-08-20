@@ -1,5 +1,5 @@
 
-import { View, Text, SafeAreaView, BackHandler, Alert, TouchableOpacity, Pressable } from 'react-native'
+import { View, Text, SafeAreaView, BackHandler, Alert, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
@@ -10,6 +10,7 @@ import ModalInfo from '@/components/ModalInfo';
 import { shuffleArray } from '@/helpers/arrayShuffle';
 import ModalGameResult from '@/components/ModalGameResult';
 import * as Animatable from "react-native-animatable";
+import { Ionicons } from '@expo/vector-icons';
 
 
 const GameScreen = () => {
@@ -92,6 +93,7 @@ const GameScreen = () => {
         cleanGame();
         setShowModalInfo(false);
         router.replace('/(tabs)/GameConfig');
+        return;
     }
 
     const cleanGame = () => {
@@ -101,18 +103,16 @@ const GameScreen = () => {
         setCurrentQuestion(null)
     }
 
-
-
     return (
         <SafeAreaView className='h-full bg-[#1E293B]'>
             <View className="mt-16 justify-center px-6">
                 <Pressable
                     onPress={() => router.replace('/(tabs)/GameConfig')}
-                    className="self-start mb-4 bg-slate-700/40 rounded-xl px-4 py-2"
+                    className="self-start rounded-xl px-4 py-2"
                 >
-                    <Text className='text-white font-medium'>← Volver</Text>
+                    <Ionicons name="arrow-back" size={32} color='white'/>
                 </Pressable>
-
+                
 
                 <View className="flex-row justify-between w-full px-4 mb-6 mt-6">
                     <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
@@ -131,7 +131,6 @@ const GameScreen = () => {
 
                 {currentQuestion?.options && currentQuestion.options.map((option, index) => {
 
-
                     let optionStyle = "bg-sky-50 border border-slate-600";
                     if (selectedOption) {
                         if (option === currentQuestion.correctAnswer) {
@@ -146,7 +145,7 @@ const GameScreen = () => {
                         <Animatable.View
                             key={option}
                             animation="bounceIn"
-                            delay={index * 100} // efecto escalonado
+                            delay={index * 100}
                         >
                             <TouchableOpacity
                                 key={index}
@@ -157,16 +156,14 @@ const GameScreen = () => {
                             >
                                 <Text className="text-black text-center font-medium text-base">{option}</Text>
                             </TouchableOpacity>
-
                         </Animatable.View>
-
                     )
                 })}
+                <View className='mt-8'>
+                    <Text className="text-white text-lg text-center">Pregunta  <Text className='text-green-300'>{questionCounter}</Text>  de  {questionsFiltered.length}</Text>
+                </View>
+            </View>
 
-            </View>
-            <View className='mt-8'>
-                <Text className="text-white text-lg text-center">Pregunta  <Text className='text-green-300'>{questionCounter}</Text>  de  {questionsFiltered.length}</Text>
-            </View>
             <ModalGameResult
                 correctAnswers={score}
                 wrongAnswers={questionsFiltered.length - score}
@@ -174,9 +171,7 @@ const GameScreen = () => {
                 message='Has finalizado todas las preguntas, estos son los resultados'
                 buttonText='Regresar'
                 onPressButton={onPressModalButton} >
-
             </ModalGameResult>
-
         </SafeAreaView>
     )
 }
