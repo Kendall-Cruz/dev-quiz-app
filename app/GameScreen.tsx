@@ -9,6 +9,8 @@ import { Audio } from 'expo-av'
 import ModalInfo from '@/components/ModalInfo';
 import { shuffleArray } from '@/helpers/arrayShuffle';
 import ModalGameResult from '@/components/ModalGameResult';
+import * as Animatable from "react-native-animatable";
+
 
 const GameScreen = () => {
     const { questionsFiltered, setQuestionsFiltered } = useQuestionStore()
@@ -121,13 +123,14 @@ const GameScreen = () => {
                     </View>
                 </View>
 
-                <View className="bg-white rounded-2xl p-6 my-6 py-20 w-full shadow-lg">
+                <Animatable.View key={currentQuestion?.question} animation='bounceInDown' className="bg-white rounded-2xl p-6 my-6 py-20 w-full shadow-lg ">
                     <Text className="text-center text-gray-800 text-lg leading-relaxed font-medium">
                         {currentQuestion?.question}
                     </Text>
-                </View>
+                </Animatable.View>
 
                 {currentQuestion?.options && currentQuestion.options.map((option, index) => {
+
 
                     let optionStyle = "bg-sky-50 border border-slate-600";
                     if (selectedOption) {
@@ -140,17 +143,25 @@ const GameScreen = () => {
                         }
                     }
                     return (
-                        <TouchableOpacity
-                            key={index}
-                            disabled={!!selectedOption} // deshabilitar botones después de elegir
-                            className={`rounded-xl py-5 px-6 mt-5 mb-3 w-full shadow-md ${optionStyle}`}
-                            onPress={() => checkAnswer(option)}
+                        <Animatable.View
+                            key={option}
+                            animation="bounceIn"
+                            delay={index * 100} // efecto escalonado
                         >
-                            <Text className="text-black text-center font-medium text-base">{option}</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                key={index}
+                                disabled={!!selectedOption}
+                                activeOpacity={0.7}
+                                className={`rounded-xl py-5 px-6 mt-5 mb-3 w-full shadow-md ${optionStyle} border-blue-300 border-2`}
+                                onPress={() => checkAnswer(option)}
+                            >
+                                <Text className="text-black text-center font-medium text-base">{option}</Text>
+                            </TouchableOpacity>
+
+                        </Animatable.View>
+
                     )
                 })}
-
 
             </View>
             <View className='mt-8'>

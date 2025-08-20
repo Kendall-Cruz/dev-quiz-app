@@ -25,10 +25,7 @@ const Register = () => {
     });
 
     const { register, message, error } = useSessionContext();
-
     const [showPassword, setShowPassword] = useState(false);
-
-
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -63,7 +60,6 @@ const Register = () => {
             return;
         }
     }
-
 
     return (
         <SafeAreaView style={styles.container}>

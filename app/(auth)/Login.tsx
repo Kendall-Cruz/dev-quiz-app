@@ -9,9 +9,6 @@ import { useSessionContext } from "../../context/SessionContext";
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { authStyles as styles } from '../../assets/styles/AuthStyles';
 
-
-
-
 const Login = () => {
     const { control, handleSubmit, formState: { errors }, } = useForm({
         defaultValues: {
