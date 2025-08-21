@@ -50,7 +50,7 @@ const Login = () => {
 
         console.log("Resultado del login", result)
         if (result) {
-            router.replace('/(tabs)')
+            router.replace('/(tabs)') // Redirige al listado
         }
     }
 
@@ -109,7 +109,7 @@ const Login = () => {
                                 rules={{
                                     required: 'La contraseña es requerida',
                                     minLength: {
-                                        value: 4,
+                                        value: 8,
                                         message: 'La contraseña debe tener al menos 8 caracteres',
                                     },
                                 }}

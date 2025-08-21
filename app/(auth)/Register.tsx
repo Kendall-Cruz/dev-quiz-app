@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 import { authStyles as styles } from '../../assets/styles/AuthStyles';
-import { replace } from "expo-router/build/global-state/routing";
 
 const Register = () => {
 
@@ -158,7 +157,7 @@ const Register = () => {
                                 rules={{
                                     required: 'La contraseña es requerida',
                                     minLength: {
-                                        value: 4,
+                                        value: 8,
                                         message: 'La contraseña debe tener al menos 8 caracteres',
                                     },
                                 }}

@@ -40,7 +40,7 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
     const [message, setMessage] = useState<string | null>("");
 
 
-    const login = async (email: string, password: string): Promise<boolean> => { //Poner tryCatch
+    const login = async (email: string, password: string): Promise<boolean> => { //Poner tryCatch :PP 
         setIsLoading(true);
         setError(null);
 

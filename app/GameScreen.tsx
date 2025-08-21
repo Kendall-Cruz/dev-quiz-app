@@ -46,6 +46,8 @@ const GameScreen = () => {
         return
     }, [questionCounter])
 
+
+    //Efecto para cargar los sonidos 
     useEffect(() => {
 
         const loadSounds = async () => {
@@ -59,16 +61,14 @@ const GameScreen = () => {
             setCorrectSound(soundCorrect);
             setWrongSound(soundWrong);
         };
-
         loadSounds();
-
-
         return () => {
             correctSound && correctSound.unloadAsync();
             wrongSound && wrongSound.unloadAsync();
         };
     }, []);
 
+    //Función para verificar la respuesta y guardar un nuevo score
     const checkAnswer = async (answer: string) => {
         if (!currentQuestion) return
 
@@ -83,12 +83,13 @@ const GameScreen = () => {
                 await wrongSound?.replayAsync();
             }
 
-            setTimeout(() => {
+            setTimeout(() => { //El juego funciona de la manera de que , en cada cambio de pregunta hay un pequeño tiempo de feedback
                 setQuestionCounter(questionCounter + 1);
             }, 2000);
         }
     }
 
+    //El modal de resultado final se muestra pero solo es posible cerrarlo por medio de este metodo que limpia el juego y redirije a la configuración de nuevo
     const onPressModalButton = () => {
         cleanGame();
         setShowModalInfo(false);

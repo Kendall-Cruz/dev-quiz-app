@@ -23,11 +23,11 @@ const GameConfig = () => {
     const { setQuestionsFiltered } = useQuestionStore();
 
     const onSubmit = async (data: any) => {
-        const filteredQuestions = await getQuestionsByCategoryLevel(data.category, data.difficulty);
+        const filteredQuestions = await getQuestionsByCategoryLevel(data.category, data.difficulty); //Obtiene las preguntas filtradas
+ 
+        setQuestionsFiltered(shuffleArray(filteredQuestions)) //Las guarda en el estado global de zustand
 
-        setQuestionsFiltered(shuffleArray(filteredQuestions))
-
-        router.push('/GameScreen')
+        router.push('/GameScreen') //Redirije al juego
     };
 
     return (
