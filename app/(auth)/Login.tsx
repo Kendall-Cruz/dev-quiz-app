@@ -22,8 +22,7 @@ const Login = () => {
         Montserrat_700Bold,
     });
 
-
-    const { login, clearError, user, error } = useSessionContext()
+    const { login, clearError, user, error , clearMessage } = useSessionContext()
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -36,10 +35,8 @@ const Login = () => {
         }
     }, [error]);
 
-
-    //Para prueba(Borrar)
     useEffect(() => {
-        console.log(user)
+        clearMessage();
     }, []);
 
     const closeErrorModal = () => {
@@ -48,17 +45,12 @@ const Login = () => {
     }
 
     const onSubmit = async (data: any) => {
-        console.log('Form data:', data);
 
         const result = await login(data.email, data.password);
 
         console.log("Resultado del login", result)
         if (result) {
-            console.log("Hola", user?.name);
             router.replace('/(tabs)')
-        } else {
-
-            console.log('Falló el inicio de sesión', error);
         }
     }
 

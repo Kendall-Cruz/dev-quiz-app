@@ -1,4 +1,4 @@
-import { View, Text , Image } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
 import LogoutButton from './LogoutButton'
 
@@ -8,17 +8,22 @@ interface HeaderProps {
 
 const Header = ({ title }: HeaderProps) => {
     return (
-        <View className="mt-4 mb-4 mx-2 flex-row items-center justify-between relative bg-transparent">
+        <View className=" mb-4 px-2 flex-row items-center justify-between relative">
             <Image
-                style={{ width: 68, height: 68, borderRadius: 20 }}
+                style={{ width: 70, height: 70, borderRadius: 20 }}
                 source={require('../assets/images/Logo22.png')}
             />
 
             <Text
-                className="font-bold text-3xl text-white"
+                className=" text-center flex-1 font-bold text-2xl text-white mx-2"
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.8}
             >
                 {title}
             </Text>
+
+
 
             <LogoutButton />
         </View>

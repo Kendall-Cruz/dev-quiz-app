@@ -6,16 +6,17 @@ import { useCategoryStore } from './storage/useCategoryStore'
 
 const useQuiz = () => {
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([])
-  const { categories , setCategories}  = useCategoryStore();
+  const { categories, setCategories } = useCategoryStore();
 
   const getCategoriesApi = async () => {
     const categoriesResponse = await getAllCategories();
     setCategories(categoriesResponse); //Se setean las categorias en el estado global de zustand
-    setFilteredCategories(categoriesResponse);
+    setFilteredCategories(categoriesResponse); // Y en el estado local filtrado
   }
 
-  const getCategoriesByName = useCallback( (nombre: string) => {
-    
+  const getCategoriesByName = useCallback((nombre: string) => {
+    /* Use el callback porque cuando lo hacía sin callback
+    se bugeaba el filtrado a renderizarse cada vez*/
     if (!categories.length) {
       return;
     }
@@ -30,7 +31,7 @@ const useQuiz = () => {
     }
   }, [categories]);
 
-  
+
 
   return {
     getCategoriesApi,

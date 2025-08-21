@@ -20,10 +20,10 @@ const LogoutButton = () => {
       {/* Botón de logout */}
       <Pressable
         onPress={() => setShowModal(true)}
-        className="mx-2"
+        className="mx-4"
       >
 
-        <Image style={{width:52 , height:52 , marginBottom:12}} source={require('../assets/images/logout_icono-.png')} />
+        <Image style={{width:36 , height:36 }} source={require('../assets/images/logout_icono-.png')} />
         {/*<Ionicons name="log-out-outline" size={42} color="white" />*/}
       </Pressable>
 

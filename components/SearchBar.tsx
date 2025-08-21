@@ -13,18 +13,21 @@ const SearchBar = ({ onSearchTextChange, placeholder = "Buscar..." }: Props) => 
     const [searchText, setSearchText] = useState('');
 
     const handleTextChange = (text: string) => {
-        setSearchText(text); 
+        setSearchText(text);
         onSearchTextChange(text);
     };
 
     const clearSearch = () => {
-        
         setSearchText('');
         onSearchTextChange('');
     };
 
     return (
-        <View className="flex-row items-center bg-gray-100 rounded-md px-5 py-1 my-2.5 shadow-sm">
+        <View className="flex-row items-center bg-gray-100 rounded-md px-5 py-1 my-2.5 shadow-lg" >
+
+            <View className="p-1">
+                <Ionicons name="search" size={24} color="#6B7280" />
+            </View>
             <TextInput
                 className="flex-1 text-base text-gray-700 pr-2.5"
                 placeholder={placeholder}
@@ -33,11 +36,11 @@ const SearchBar = ({ onSearchTextChange, placeholder = "Buscar..." }: Props) => 
                 onChangeText={handleTextChange}
                 returnKeyType="search"
             />
-
-            <View className="p-1">
-                <Ionicons name="search" size={24} color="#6B7280" />
-            </View>
-
+            {searchText.length > 0 && (
+                <TouchableOpacity onPress={clearSearch}>
+                    <Ionicons name="close-circle" size={22} color="#9CA3AF" />
+                </TouchableOpacity>
+            )}
         </View>
     );
 }

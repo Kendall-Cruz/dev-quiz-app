@@ -11,10 +11,7 @@ import { replace } from "expo-router/build/global-state/routing";
 
 const Register = () => {
 
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
+    const { control, handleSubmit, formState: { errors },
     } = useForm({
         defaultValues: {
             name: '',
@@ -24,22 +21,10 @@ const Register = () => {
         },
     });
 
-    const { register, message, error } = useSessionContext();
+    const { register, message, error, clearMessage } = useSessionContext();
     const [showPassword, setShowPassword] = useState(false);
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-    // Mostrar modal cuando hay error
-    useEffect(() => {
-        if (error) {
-            setShowErrorModal(true);
-        }
-    }, [error]);
-
-    useEffect(() => {
-        if (message)
-            setShowSuccessModal(true)
-    }, [message]);
 
     const closeErrorModal = () => {
         setShowErrorModal(false);
@@ -50,23 +35,20 @@ const Register = () => {
     }
 
     const submit = async (data: any) => {
-        console.log(data);
-        const result = await register(data.name, data.surname, data.email, data.password)
-        console.log("resultado", result)
-        if (result) {
-            console.log('se registr´o')
+        const result = await register(data.name, data.surname, data.email, data.password);
+        if (!result) {
+            setShowErrorModal(true);
         } else {
-            console.log('fallo') //Borrar prueba
-            return;
+            setShowSuccessModal(true);
         }
-    }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="black" />
             <ScrollView>
                 {/* Form */}
-                <View style={styles.formContainer}>
+                <View className="mt-36" style={styles.formContainer}>
                     <Text style={styles.title}>Registrarse</Text>
 
 
@@ -235,11 +217,11 @@ const Register = () => {
             <ModalInfo
                 visible={showSuccessModal}
                 onClose={closeSuccessModal}
-                title="Usuario registrado"
-                message={"Se registro el usuario exitosamente"}
-                icon={{ name: 'information-circle', color: 'blue' }}
+                title="Registro exitoso"
+                message={"Se registro el usuario exitosamente. Puedes iniciar sesión para continuar"}
+                icon={{ name: 'checkmark-circle', color: 'green' }}
                 buttons={[
-                    {text: 'Iniciar Sesión' , color:'blue' , onPress: () => {router.back()}}
+                    { text: 'Iniciar Sesión', color: 'blue', onPress: () => { router.back() } }
                 ]}
             />
         </SafeAreaView>

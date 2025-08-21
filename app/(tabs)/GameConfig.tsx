@@ -31,11 +31,10 @@ const GameConfig = () => {
     };
 
     return (
-        <SafeAreaView className='h-full ' style={{ backgroundColor: '#1E293B' }}>
+        <SafeAreaView className='h-full bg-[#1E293B]'>
             <ScrollView>
-                <Header />
-                <Text className='font-bold text-2xl text-white text-center'>Configure su juego</Text>
-                <View className=" mt-16 justify-center px-6">
+                <Header title='Configuración' />
+                <View className=" mt-12 justify-center px-6">
 
                     {/* Categoría */}
                     <Text className="text-white mb-2 text-lg font-semibold">Categoría</Text>
