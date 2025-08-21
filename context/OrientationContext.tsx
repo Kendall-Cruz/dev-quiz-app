@@ -13,19 +13,16 @@ export const useOrientation = () => useContext(OrientationContext);
 
 // Provider
 export const OrientationProvider = ({ children }: PropsWithChildren) => {
-  const [isPortrait, setIsPortrait] = useState(true); // valor inicial simple
+  const [isPortrait, setIsPortrait] = useState(true);
 
-  // Función para calcular orientación
   const checkOrientation = () => {
     const { width, height } = Dimensions.get("window");
     setIsPortrait(height >= width);
   };
 
   useEffect(() => {
-    // Calculamos la orientación al montar
     checkOrientation();
 
-    // Escuchamos cambios de tamaño (rotación)
     const subscription = Dimensions.addEventListener("change", checkOrientation);
 
     return () => {
