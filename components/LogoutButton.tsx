@@ -17,17 +17,14 @@ const LogoutButton = () => {
 
   return (
     <>
-      {/* Botón de logout */}
       <Pressable
         onPress={() => setShowModal(true)}
         className="mx-4"
       >
 
         <Image style={{width:36 , height:36 }} source={require('../assets/images/logout_icono-.png')} />
-        {/*<Ionicons name="log-out-outline" size={42} color="white" />*/}
       </Pressable>
 
-      {/* Modal de confirmación */}
       <ModalInfo
         visible={showModal}
         onClose={() => setShowModal(false)}

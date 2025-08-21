@@ -14,7 +14,7 @@ const SearchBar = ({ onSearchTextChange, placeholder = "Buscar..." }: Props) => 
 
     const handleTextChange = (text: string) => {
         setSearchText(text);
-        onSearchTextChange(text);
+        onSearchTextChange(text); // Llama al callback para filtrar categorías
     };
 
     const clearSearch = () => {

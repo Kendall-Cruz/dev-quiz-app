@@ -13,14 +13,14 @@ import * as Animatable from "react-native-animatable";
 import CategoryDetails from '@/components/CategoryDetails';
 
 const CategoriesScreen = () => {
-
-    const { getCategoriesApi, filteredCategories, getCategoriesByName } = useQuiz();
+   
+    const { getCategoriesApi, filteredCategories, getCategoriesByName } = useQuiz(); // Hook para manejar categorías
     const [categoryDetailsVisible, setCategoryDetailsVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
 
-    useEffect(() => {
+    useEffect(() => { // Efecto para cargar las categorías cuando se monta el componente
         const fetchCategories = async () => {
-            getCategoriesApi();
+            getCategoriesApi(); // Trae categorías desde la API y las guarda en el estado
         };
         fetchCategories();
     }, []);
@@ -66,8 +66,6 @@ const CategoriesScreen = () => {
                 onClose={() => setCategoryDetailsVisible(false)}
             />
         </SafeAreaView>
-
-
     )
 }
 
