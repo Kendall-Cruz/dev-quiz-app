@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "CodeQuiz",
-    "slug": "dev-quiz-app",
+    "slug": "quiz_app",
+    "owner": "kendall_cruz",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/Logo22.png",
+    "icon": "./assets/images/LogoApp.png",
     "scheme": "devquizapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,22 +14,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/LogoApp.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.kendall_cruz.quiz_app"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/LogoApp.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/LogoApp.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000"
@@ -38,6 +40,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "385e9178-b7d5-4ebb-8810-d713bb63ced7"
+      }
     }
   }
 }
