@@ -31,8 +31,6 @@ Una aplicación móvil desarrollada con **Expo** y **React Native** que ofrece q
 git clone https://github.com/Kendall-Cruz/dev-quiz-app.git
 cd dev-quiz-app
 
-## Instalación y ejecución
-```bash
 #Instalación de paquetes
 npm install
 
