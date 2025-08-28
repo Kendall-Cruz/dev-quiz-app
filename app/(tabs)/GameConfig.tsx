@@ -52,7 +52,7 @@ const GameConfig = () => {
                                 placeholder="Selecciona la categoría"
                                 renderItem={(item) => (
                                     <View className="flex-row items-center p-2">
-                                        <Image source={{ uri: item.icon }} className="w-6 h-6 mr-2 rounded-full" />
+                                        <Image source={{ uri: item.icon }} className="w-6 h-6 mr-2" />
                                         <Text>{item.category}</Text>
                                     </View>
                                 )}
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     DropDown: {
         backgroundColor: 'white',
         marginBottom: 8,
+        borderRadius: 3,
         paddingVertical: 18,
         paddingHorizontal: 4
     }
