@@ -107,7 +107,6 @@ const GameConfig = () => {
 const styles = StyleSheet.create({
     DropDown: {
         backgroundColor: 'white',
-        borderRadius: 3,
         marginBottom: 8,
         paddingVertical: 12,
         paddingHorizontal: 4
