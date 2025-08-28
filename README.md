@@ -2,7 +2,7 @@
 Una aplicación móvil desarrollada con **Expo** y **React Native** que ofrece quizzes para desarrolladores. Ideal para poner a prueba tus conocimientos técnicos en programación, frameworks y desarrollo web.
 ---
 
-## 🧠 Características
+## Características
 
 - Preguntas de opción múltiple sobre desarrollo
 - Interfaz intuitiva y responsive
@@ -12,7 +12,7 @@ Una aplicación móvil desarrollada con **Expo** y **React Native** que ofrece q
 
 ---
 
-## 🚀 Tecnologías
+## Tecnologías
 
 - [Expo](https://expo.dev/)
 - [React Native](https://reactnative.dev/)
@@ -23,7 +23,7 @@ Una aplicación móvil desarrollada con **Expo** y **React Native** que ofrece q
 
 ---
 
-## 📦 Instalación
+## Instalación
 
 1. Clona este repositorio
 
