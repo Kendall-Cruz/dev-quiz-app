@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/Header'
 import { Controller, useForm } from 'react-hook-form'
@@ -9,6 +9,7 @@ import { getQuestionsByCategoryLevel } from '@/services/QuestionService'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
 import { shuffleArray } from '../../helpers/arrayShuffle';
+import DropDownPicker from "react-native-dropdown-picker";
 
 const GameConfig = () => {
 
@@ -24,7 +25,7 @@ const GameConfig = () => {
 
     const onSubmit = async (data: any) => {
         const filteredQuestions = await getQuestionsByCategoryLevel(data.category, data.difficulty); //Obtiene las preguntas filtradas
- 
+
         setQuestionsFiltered(shuffleArray(filteredQuestions)) //Las guarda en el estado global de zustand
 
         router.push('/GameScreen') //Redirije al juego
@@ -42,20 +43,29 @@ const GameConfig = () => {
                         control={control}
                         name="category"
                         rules={{ required: 'Debe seleccionar una categoría' }}
-                        render={({ field: { onChange, value } }) => (
-                            <View className="bg-white rounded-md mb-2">
-                                <Picker
-                                    selectedValue={value}
-                                    onValueChange={(itemValue) => onChange(itemValue)}
-                                >
-                                    <Picker.Item label="Selecciona la categoría" value="" />
-                                    {categories.map((cat) => <Picker.Item key={cat._id} label={cat.category} value={cat._id} style={{ fontWeight: 'bold' }} />)}
-                                </Picker>
-                            </View>
-                        )}
+                        render={({ field: { onChange, value } }) => {
+                            const [open, setOpen] = useState(false);
+
+                            return (
+                                <DropDownPicker
+                                    open={open}
+                                    value={value}
+                                    items={categories.map(cat => ({
+                                        label: cat.category,
+                                        value: cat._id,
+                                        icon: () => (
+                                            <Image source={{ uri: cat.icon }} style={{ width: 20, height: 20 }} />
+                                        )
+                                    }))}
+                                    setOpen={setOpen}
+                                    setValue={onChange}
+                                    placeholder="Selecciona la categoría"
+                                />
+                            );
+                        }}
                     />
                     {errors.category && (
-                        <Text className='text-red-500 text-base ml-1'>{errors.category.message}</Text>
+                        <Text className="text-red-500 text-base ml-1">{errors.category.message}</Text>
                     )}
 
                     {/* Dificultad */}
