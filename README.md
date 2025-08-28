@@ -10,6 +10,6 @@
 ## Instalación y ejecución
 ```bash
 npm install
-npm run start
+npm start
 # o
 expo start
