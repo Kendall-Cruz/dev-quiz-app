@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native'
+import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/Header'
 import { Controller, useForm } from 'react-hook-form'
@@ -9,7 +9,7 @@ import { getQuestionsByCategoryLevel } from '@/services/QuestionService'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
 import { shuffleArray } from '../../helpers/arrayShuffle';
-import DropDownPicker from "react-native-dropdown-picker";
+import { Dropdown } from 'react-native-element-dropdown';
 
 const GameConfig = () => {
 
@@ -43,29 +43,26 @@ const GameConfig = () => {
                         control={control}
                         name="category"
                         rules={{ required: 'Debe seleccionar una categoría' }}
-                        render={({ field: { onChange, value } }) => {
-                            const [open, setOpen] = useState(false);
-
-                            return (
-                                <DropDownPicker
-                                    open={open}
-                                    value={value}
-                                    items={categories.map(cat => ({
-                                        label: cat.category,
-                                        value: cat._id,
-                                        icon: () => (
-                                            <Image source={{ uri: cat.icon }} style={{ width: 20, height: 20 }} />
-                                        )
-                                    }))}
-                                    setOpen={setOpen}
-                                    setValue={onChange}
-                                    placeholder="Selecciona la categoría"
-                                />
-                            );
-                        }}
+                        render={({ field: { onChange, value } }) => (
+                            <Dropdown
+                                style={styles.DropDown}
+                                data={categories}
+                                labelField="category"
+                                valueField="_id"
+                                value={value}
+                                placeholder="Selecciona la categoría"
+                                renderItem={(item) => (
+                                    <View className="flex-row items-center p-2">
+                                        <Image source={{ uri: item.icon }} className="w-6 h-6 mr-2 rounded-full" />
+                                        <Text>{item.category}</Text>
+                                    </View>
+                                )}
+                                onChange={(item) => onChange(item._id)}
+                            />
+                        )}
                     />
                     {errors.category && (
-                        <Text className="text-red-500 text-base ml-1">{errors.category.message}</Text>
+                        <Text className='text-red-500 text-base ml-1'>{errors.category.message}</Text>
                     )}
 
                     {/* Dificultad */}
@@ -75,17 +72,19 @@ const GameConfig = () => {
                         name="difficulty"
                         rules={{ required: 'Debe seleccionar la dificultad' }}
                         render={({ field: { onChange, value } }) => (
-                            <View className="bg-white rounded-md mb-2">
-                                <Picker
-                                    selectedValue={value}
-                                    onValueChange={(itemValue) => onChange(itemValue)}
-                                >
-                                    <Picker.Item label="Selecciona una dificultad" value="" />
-                                    <Picker.Item label="Fácil" value="1" />
-                                    <Picker.Item label="Intermedio" value="2" />
-                                    <Picker.Item label="Difícil" value="3" />
-                                </Picker>
-                            </View>
+                            <Dropdown
+                                style={styles.DropDown}
+                                data={[
+                                    { label: 'Fácil', value: '1' },
+                                    { label: 'Intermedio', value: '2' },
+                                    { label: 'Difícil', value: '3' }
+                                ]}
+                                labelField="label"
+                                valueField="value"
+                                value={value}
+                                placeholder="Selecciona una dificultad"
+                                onChange={(item) => onChange(item.value)}
+                            />
                         )}
                     />
                     {errors.difficulty && (
@@ -105,5 +104,14 @@ const GameConfig = () => {
         </SafeAreaView>
     )
 }
+
+
+const styles = StyleSheet.create({
+    DropDown: {
+        backgroundColor: 'white',
+        borderRadius: 8,
+        marginBottom: 8
+    }
+})
 
 export default GameConfig
