@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     DropDown: {
         backgroundColor: 'white',
         marginBottom: 8,
-        paddingVertical: 12,
+        paddingVertical: 18,
         paddingHorizontal: 4
     }
 })
