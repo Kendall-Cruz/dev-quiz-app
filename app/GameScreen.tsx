@@ -118,8 +118,8 @@ const GameScreen = () => {
                     <View className="flex-row justify-between w-full px-4 mb-6 mt-6">
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
                             <Text className="text-white text-lg">Modo: <Text className="font-bold">{
-                                currentQuestion?.level
-                            }</Text></Text>
+                            currentQuestion?.level === 1? "Fácil": currentQuestion?.level === 2? "Intermedio" : currentQuestion?.level === 3 ? "Difícil": ""}
+                            </Text></Text>
                         </View>
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
                             <Text className="text-white text-lg">Puntuación: <Text className="font-bold">{score}</Text></Text>

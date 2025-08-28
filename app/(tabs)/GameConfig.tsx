@@ -3,7 +3,6 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/Header'
 import { Controller, useForm } from 'react-hook-form'
-import { Picker } from '@react-native-picker/picker';
 import { useCategoryStore } from '@/hooks/storage/useCategoryStore'
 import { getQuestionsByCategoryLevel } from '@/services/QuestionService'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
@@ -105,12 +104,13 @@ const GameConfig = () => {
     )
 }
 
-
 const styles = StyleSheet.create({
     DropDown: {
         backgroundColor: 'white',
-        borderRadius: 8,
-        marginBottom: 8
+        borderRadius: 3,
+        marginBottom: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 2
     }
 })
 
