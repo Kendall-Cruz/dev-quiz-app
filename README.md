@@ -8,8 +8,11 @@
 - Estilos (CSS, Tailwind, NativeWind, etc.)
 
 ## Instalación y ejecución
+#Instalación de paquetes
 ```bash
 npm install
+
+#Iniciar el proyecto
 npm start
 # o
 expo start
