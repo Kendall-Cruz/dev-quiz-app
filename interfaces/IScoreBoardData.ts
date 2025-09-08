@@ -1,4 +1,5 @@
 export interface IScoreBoardData {
     username: string,
-    maxScore:string
+    maxScore: number,
+    level: number;
 }

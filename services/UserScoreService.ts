@@ -5,46 +5,46 @@ import axios from "axios";
 import { getUserById } from "./LoginService";
 
 
-const getTopTenUsers = async (categoryId:string ):Promise<IScoreBoardData[]> => {
+export const getTopTenUsers = async (categoryId: string, level: number): Promise<IScoreBoardData[]> => {
     try {
-        const response = await axios.get(`${process.env.EXPO_PUBLIC_USERSCORE}/category/${categoryId}`);
+        const response = await axios.get(
+            `${process.env.EXPO_PUBLIC_USERSCORE}/category/${categoryId}/level/${level}`
+        );
 
-        const topScores:IUserScore[] = response.data
+        const topScores: IUserScore[] = response.data;
 
-        topScores.forEach(async element => {
-            //TODO Iniciar una variable para guardar los elemneto en un IScoreBoardData y hacerle push a un list de IScoreBoardData que se va a retornar
-            const user = await getUserById(element.userId);
+        const scores: IScoreBoardData[] = await Promise.all(
+            topScores.map(async (s) => {
+                const user = await getUserById(s.userId);
 
-            
+                return {
+                    username: `${user?.name}  ${user?.surname}` || "Desconocido",
+                    maxScore: s.maxScore,
+                    level: s.level,
+                };
+            })
+        );
 
-        });
-        
+        return scores.sort((a, b) => Number(b.maxScore) - Number(a.maxScore)).slice(0, 10);
 
+    } catch (error) {
+        console.error("Error en getTopTenUsers:", error);
+        return [];
+    }
+};
 
+export const submitScore = async (categoryId: string, userId: string, score: number, level: number): Promise<IUserScore | null> => {
+    try {
+        const response = await axios.post(
+            `${process.env.EXPO_PUBLIC_USERSCORE}/submitScore`, { categoryId, userId, score, level, }
+        );
+        console.log("Realizó el guardado")
         return response.data;
     } catch (error) {
         console.log(error)
-        return [];
+        return null;
     }
 }
 
 
 
-const getTopTenUsers2 = async (categoryId: string): Promise<IScoreBoardData[]> => {
-  try {
-    const response = await axios.get(`${process.env.EXPO_PUBLIC_USERSCORE}/category/${categoryId}`);
-    
-    const topScores = response.data;
-
-    const scores: IScoreBoardData[] = topScores.map((s: any) => ({
-      categoryId: s.categoryId,
-      userId: s.userId,
-      maxScore: s.maxScore
-    }));
-
-    return scores;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}

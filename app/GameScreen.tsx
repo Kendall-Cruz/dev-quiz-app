@@ -4,18 +4,19 @@ import React, { useEffect, useState } from 'react'
 import { useQuestionStore } from '@/hooks/storage/useQuestionStore'
 import { router } from 'expo-router'
 import { IQuestion } from '../interfaces/IQuestion';
-import { goBack } from 'expo-router/build/global-state/routing';
 import { Audio } from 'expo-av'
-import ModalInfo from '@/components/ModalInfo';
 import { shuffleArray } from '@/helpers/arrayShuffle';
 import ModalGameResult from '@/components/ModalGameResult';
 import * as Animatable from "react-native-animatable";
 import { Ionicons } from '@expo/vector-icons';
+import { submitScore } from '@/services/UserScoreService';
+import { useUserStore } from '@/hooks/storage/useUserStore';
 
 
 const GameScreen = () => {
     const { questionsFiltered, setQuestionsFiltered } = useQuestionStore()
     const [currentQuestion, setCurrentQuestion] = useState<IQuestion | null>(null);
+    const { user } = useUserStore();
     const [questionCounter, setQuestionCounter] = useState(1)
     const [score, setScore] = useState(0);
     const [showModalInfo, setShowModalInfo] = useState(false); //Modal del resultado
@@ -90,12 +91,28 @@ const GameScreen = () => {
     }
 
     //El modal de resultado final se muestra pero solo es posible cerrarlo por medio de este metodo que limpia el juego y redirije a la configuración de nuevo
-    const onPressModalButton = () => {
-        cleanGame();
-        setShowModalInfo(false);
-        router.replace('/(tabs)/GameConfig');
-        return;
-    }
+    const onPressModalButton = async () => {
+        if (!currentQuestion || !user) return;
+
+        try {
+            console.log("Se presionó el botón del modal")
+            // Espera a que el score se guarde
+            await submitScore(
+                currentQuestion.categoryId,
+                user._id,
+                score,
+                currentQuestion.level
+            );
+
+            // Limpia el juego y redirige
+            cleanGame();
+            setShowModalInfo(false);
+            router.replace('/(tabs)/GameConfig');
+        } catch (error) {
+            console.error("Error guardando el score:", error);
+            Alert.alert("Error", "No se pudo guardar tu puntuación. Intenta de nuevo.");
+        }
+    };
 
     const cleanGame = () => {
         setScore(0)
@@ -118,7 +135,7 @@ const GameScreen = () => {
                     <View className="flex-row justify-between w-full px-4 mb-6 mt-6">
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
                             <Text className="text-white text-lg">Modo: <Text className="font-bold">{
-                            currentQuestion?.level === 1? "Fácil": currentQuestion?.level === 2? "Intermedio" : currentQuestion?.level === 3 ? "Difícil": ""}
+                                currentQuestion?.level === 1 ? "Fácil" : currentQuestion?.level === 2 ? "Intermedio" : currentQuestion?.level === 3 ? "Difícil" : ""}
                             </Text></Text>
                         </View>
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
