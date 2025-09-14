@@ -18,7 +18,7 @@ export const getTopTenUsers = async (categoryId: string, level: number): Promise
                 const user = await getUserById(s.userId);
 
                 return {
-                    username: `${user?.name}  ${user?.surname}` || "Desconocido",
+                    username: `${user?.name} ${user?.surname}` || "Desconocido",
                     maxScore: s.maxScore,
                     level: s.level,
                 };

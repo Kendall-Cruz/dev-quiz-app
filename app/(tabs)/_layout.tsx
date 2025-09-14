@@ -34,6 +34,15 @@ export default function TabsLayout() {
                         href: null, // Esto oculta la pestaña
                     }}
                 />
+                <Tabs.Screen name='ScoreBoard' options={{title: 'Puntuaciones' , tabBarIcon: ({ focused }) => {
+                        return (
+                            <Image
+                                source={require('../../assets/images/scoreBoardIcon.png')}
+                                className={`w-10 h-10 mb-5 ${focused ? 'opacity-100 scale-110' : 'opacity-60 scale-100'}`}
+                            />
+                        );
+                    }}}
+                    />
 
             </Tabs>
         </>
