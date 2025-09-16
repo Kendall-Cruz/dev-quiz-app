@@ -58,7 +58,7 @@ const ScoreBoard = () => {
                         </View>
 
                         {/* Niveles */}
-                        <View className='flex-row justify-center bg-white rounded-sm py-4 mx-5 shadow-lg'>
+                        <View className='flex-row justify-center bg-white rounded-sm px-3 py-4 mx-5 shadow-lg'>
                             <TouchableOpacity
                                 className={`py-3 px-5 mx-2 rounded-sm ${level === 1 ? "bg-[#273A57]" : "bg-gray-300"}`}
                                 onPress={() => setLevel(1)}
