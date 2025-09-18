@@ -34,69 +34,117 @@ const GameConfig = () => {
         <SafeAreaView className='h-full bg-[#1E293B]'>
             <ScrollView>
                 <Header title='Configuración' />
-                <View className=" mt-12 justify-center px-6">
-
+                <View className="mt-12 justify-center px-6">
                     {/* Categoría */}
-                    <Text className="text-white mb-2 text-lg font-semibold font-montserratBold">Categoría</Text>
-                    <Controller
-                        control={control}
-                        name="category"
-                        rules={{ required: 'Debe seleccionar una categoría' }}
-                        render={({ field: { onChange, value } }) => (
-                            <Dropdown
-                                style={styles.DropDown}
-                                data={categories}
-                                labelField="category"
-                                valueField="_id"
-                                value={value}
-                                placeholder="Selecciona la categoría"
-                                renderItem={(item) => (
-                                    <View className="flex-row items-center p-2">
-                                        <Image source={{ uri: item.icon }} className="w-6 h-6 mr-2" />
-                                        <Text>{item.category}</Text>
-                                    </View>
-                                )}
-                                onChange={(item) => onChange(item._id)}
-                            />
+                    <View className="mb-8">
+                        <Text className="text-white mb-4 text-xl font-montserratBold">
+                            Categoría
+                        </Text>
+                        <Controller
+                            control={control}
+                            name="category"
+                            rules={{ required: 'Debe seleccionar una categoría' }}
+                            render={({ field: { onChange, value } }) => (
+                                <View className="bg-white rounded-xl shadow-lg overflow-hidden">
+                                    <Dropdown
+                                        style={[styles.DropDown, { backgroundColor: 'white', borderRadius: 12 }]}
+                                        data={categories}
+                                        labelField="category"
+                                        valueField="_id"
+                                        value={value}
+                                        placeholder="Selecciona una categoría"
+                                        placeholderStyle={{ color: '#6B7280', fontSize: 16 }}
+                                        selectedTextStyle={{ color: '#1F2937', fontSize: 16, fontWeight: '600' }}
+                                        renderItem={(item) => (
+                                            <View className="flex-row items-center p-4 border-b border-gray-100">
+                                                <View className="w-10 h-10 rounded-full items-center justify-center mr-3">
+                                                    <Image source={{ uri: item.icon }} className="w-6 h-6" />
+                                                </View>
+                                                <Text className="text-gray-800 font-montserratSemi text-base">
+                                                    {item.category}
+                                                </Text>
+                                            </View>
+                                        )}
+                                        onChange={(item) => onChange(item._id)}
+                                    />
+                                </View>
+                            )}
+                        />
+                        {errors.category && (
+                            <View className="flex-row items-center mt-2">
+                                <Text className="text-red-400 text-sm font-montserratSemi ml-1">
+                                    {errors.category.message}
+                                </Text>
+                            </View>
                         )}
-                    />
-                    {errors.category && (
-                        <Text className='text-red-500 text-base ml-1'>{errors.category.message}</Text>
-                    )}
+                    </View>
 
                     {/* Dificultad */}
-                    <Text className="text-white mb-2 text-lg mt-10 font-semibold font-montserratBold">Dificultad</Text>
-                    <Controller
-                        control={control}
-                        name="difficulty"
-                        rules={{ required: 'Debe seleccionar la dificultad' }}
-                        render={({ field: { onChange, value } }) => (
-                            <Dropdown
-                                style={styles.DropDown}
-                                data={[
-                                    { label: 'Fácil', value: '1' },
-                                    { label: 'Intermedio', value: '2' },
-                                    { label: 'Difícil', value: '3' }
-                                ]}
-                                labelField="label"
-                                valueField="value"
-                                value={value}
-                                placeholder="Selecciona una dificultad"
-                                onChange={(item) => onChange(item.value)}
-                            />
+                    <View className="mb-10">
+                        <Text className="text-white mb-4 text-xl font-montserratBold">
+                            Dificultad
+                        </Text>
+                        <Controller
+                            control={control}
+                            name="difficulty"
+                            rules={{ required: 'Debe seleccionar la dificultad' }}
+                            render={({ field: { onChange, value } }) => (
+                                <View className="bg-white rounded-xl shadow-lg overflow-hidden">
+                                    <Dropdown
+                                        style={[styles.DropDown, { backgroundColor: 'white', borderRadius: 12 }]}
+                                        data={[
+                                            { label: 'Fácil', value: '1' },
+                                            { label: 'Intermedio', value: '2' },
+                                            { label: 'Difícil', value: '3' }
+                                        ]}
+                                        labelField="label"
+                                        valueField="value"
+                                        value={value}
+                                        placeholder="Elige tu nivel de desafío"
+                                        placeholderStyle={{ color: '#6B7280', fontSize: 16 }}
+                                        selectedTextStyle={{ color: '#1F2937', fontSize: 16, fontWeight: '600' }}
+                                        renderItem={(item) => (
+                                            <View className="flex-row items-center p-4 border-b border-gray-100">
+                                                <View className={`w-3 h-3 rounded-full mr-3 ${item.value === '1' ? 'bg-green-400' :
+                                                        item.value === '2' ? 'bg-yellow-400' : 'bg-red-400'
+                                                    }`} />
+                                                <Text className="text-gray-800 font-montserratSemi text-base">
+                                                    {item.label}
+                                                </Text>
+                                            </View>
+                                        )}
+                                        onChange={(item) => onChange(item.value)}
+                                    />
+                                </View>
+                            )}
+                        />
+                        {errors.difficulty && (
+                            <View className="flex-row items-center mt-2">
+                                <Text className="text-red-400 text-sm font-montserratSemi ml-1">
+                                    {errors.difficulty.message}
+                                </Text>
+                            </View>
                         )}
-                    />
-                    {errors.difficulty && (
-                        <Text className='text-red-500 text-base ml-1'>{errors.difficulty.message}</Text>
-                    )}
-                    {/* Botón */}
+                    </View>
+
+                    {/* Botón mejorado */}
                     <TouchableOpacity
                         onPress={handleSubmit(onSubmit)}
-                        className="bg-blue-500 py-4 rounded-md mx-5 mt-14"
+                        className="bg-gradient-to-r from-[#273A57] to-[#1E293B] py-5 rounded-2xl mx-2 shadow-lg"
+                        style={{
+                            backgroundColor: '#273A57',
+                            shadowColor: '#273A57',
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 8,
+                            elevation: 8
+                        }}
                     >
-                        <Text className=" font-montserratBold text-center text-white text-lg">
-                            Iniciar Juego
-                        </Text>
+                        <View className="flex-row items-center justify-center">
+                            <Text className="font-montserratBold text-center text-white text-xl">
+                                Iniciar Juego
+                            </Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
 

@@ -55,19 +55,34 @@ const ScoreBoard = () => {
                     data={categories}
                     renderItem={({ item }) => (
                         <>
-                            <View
-                                key={item.category}
-                                className="flex-row justify-center items-center text-center p-10"
-                            >
-                                <Text className="text-2xl text-white text-center font-montserratSemi">
-                                    {item.category}
-                                </Text>
-                                <Image source={{ uri: item.icon }} className="w-8 h-8 mx-1" />
-                            </View>
+                            <View className="bg-[#273A57] mx-4 mt-4 rounded-t-xl">
+                                <View className="flex-row justify-between items-center p-6">
+                                    {/* Espaciador izquierdo */}
+                                    <View className="w-4" />
 
-                            <View className='flex-row justify-center bg-white rounded-sm px-3 py-4 mx-5 shadow-lg'>
+                                    {/* Contenido central */}
+                                    <View className="flex-row items-center">
+                                        <Text className="text-2xl text-white text-center font-montserratSemi">
+                                            {item.category}
+                                        </Text>
+                                        <Image source={{ uri: item.icon }} className="w-8 h-8 mx-1" />
+                                    </View>
+
+                                    {/* Icono de swipe a la derecha */}
+                                    {categories.length > 1 ? (
+                                        <Image
+                                            source={require('../../assets/images/swipe-icon.png')}
+                                            className="w-8 h-8"
+                                            style={{ tintColor: '#00c6ff' }}
+                                        />
+                                    ) : (
+                                        <View className="w-4" />
+                                    )}
+                                </View>
+                            </View>
+                            <View className='flex-row justify-center bg-white rounded-b-xl px-3 py-4 mx-4'>
                                 <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-sm ${level === 1 ? "bg-[#273A57]" : "bg-gray-300"}`}
+                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 1 ? "bg-[#273A57]" : "bg-gray-200"}`}
                                     onPress={() => setLevel(1)}
                                 >
                                     <Text className={`text-center font-montserratSemi text-base ${level === 1 ? "text-white" : "text-gray-700"}`}>
@@ -78,7 +93,7 @@ const ScoreBoard = () => {
                                 <View className="h-px bg-gray-200 mx-4 my-2" />
 
                                 <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-sm ${level === 2 ? "bg-[#273A57]" : "bg-gray-300"}`}
+                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 2 ? "bg-[#273A57]" : "bg-gray-200"}`}
                                     onPress={() => setLevel(2)}
                                 >
                                     <Text className={`text-center font-montserratSemi text-base ${level === 2 ? "text-white" : "text-gray-700"}`}>
@@ -89,7 +104,7 @@ const ScoreBoard = () => {
                                 <View className="h-px bg-gray-200 mx-4 my-2" />
 
                                 <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-sm ${level === 3 ? "bg-[#273A57]" : "bg-gray-300"}`}
+                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 3 ? "bg-[#273A57]" : "bg-gray-200"}`}
                                     onPress={() => setLevel(3)}
                                 >
                                     <Text className={`text-center font-montserratSemi text-base ${level === 3 ? "text-white" : "text-gray-700"}`}>
@@ -100,7 +115,7 @@ const ScoreBoard = () => {
 
 
                             {/* Tabla */}
-                             {topTen === null ? (
+                            {topTen === null ? (
                                 <View className="flex justify-center items-center py-10">
                                     <ActivityIndicator size="large" color="#00c6ff" />
                                     <Text className="text-white mt-3">Cargando...</Text>

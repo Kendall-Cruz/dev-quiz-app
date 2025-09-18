@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     tabBarLabelStyle: {
         marginBottom: 5,
         fontSize: 12,
-        fontWeight: '600',
         fontFamily: 'MontserratRegular'
     },
     tabBarIconStyle: {

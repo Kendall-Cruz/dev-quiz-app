@@ -15,7 +15,7 @@ const Header = ({ title }: HeaderProps) => {
             />
 
             <Text
-                className=" text-center flex-1 text-2xl text-white mx-2 font-montserratBold"
+                className=" text-center flex-1 text-2xl text-white ml-6 mx-2 font-montserratBold"
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.8}
