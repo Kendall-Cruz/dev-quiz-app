@@ -1,14 +1,4 @@
-
-12/8
-
-
-
-- Elegir tipografía titulos
-
-
-
-
-14/8
-
-15/8
-Solucionar que no salga gameScreen en las tabns
+-Incluir fuente a las letras
+-Cambiar diseño de la selección de dificultad en puntuaciones
+-Cambiar botón de logout 
+-Cambiar iconos de tabs

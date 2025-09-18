@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "CodeQuiz",
+    "name": "CodeQuest",
     "slug": "quiz_app",
     "owner": "kendall_cruz",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/LogoApp.png",
+    "icon": "./assets/images/icon_without_letters.png",
     "scheme": "devquizapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,8 +14,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/LogoApp.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/icon_without_letters.png",
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.kendall_cruz.quiz_app"
@@ -23,14 +23,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/LogoApp.png"
+      "favicon": "./assets/images/icon_without_letters.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/LogoApp.png",
+          "image": "./assets/images/icon_without_letters.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000"

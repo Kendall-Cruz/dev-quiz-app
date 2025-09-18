@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         borderRadius: 3,
         paddingVertical: 18,
-        paddingHorizontal: 4
+        paddingHorizontal: 10
     }
 })
 

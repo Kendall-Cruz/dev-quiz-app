@@ -11,22 +11,11 @@ export const getTopTenUsers = async (categoryId: string, level: number): Promise
             `${process.env.EXPO_PUBLIC_USERSCORE}/category/${categoryId}/level/${level}`
         );
 
-        const topScores: IUserScore[] = response.data;
+        const scores: IScoreBoardData[] = response.data;
 
-        const scores: IScoreBoardData[] = await Promise.all(
-            topScores.map(async (s) => {
-                const user = await getUserById(s.userId);
-
-                return {
-                    username: `${user?.name} ${user?.surname}` || "Desconocido",
-                    maxScore: s.maxScore,
-                    level: s.level,
-                };
-            })
+        return scores.sort(
+            (a, b) => Number(b.maxScore) - Number(a.maxScore)
         );
-
-        return scores.sort((a, b) => Number(b.maxScore) - Number(a.maxScore)).slice(0, 10);
-
     } catch (error) {
         console.error("Error en getTopTenUsers:", error);
         return [];
