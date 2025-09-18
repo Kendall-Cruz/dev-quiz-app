@@ -2,11 +2,19 @@ import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { View, Text } from 'react-native';
 import { LoggStates, useSessionContext } from '@/context/SessionContext';
+import { Montserrat_400Regular, Montserrat_700Bold, Montserrat_600SemiBold, useFonts } from '@expo-google-fonts/montserrat';
 
 
 export default function IndexScreen() {
     const router = useRouter();
     const { estado } = useSessionContext();
+
+    const [fontsLoaded] = useFonts({
+        MontserratRegular: Montserrat_400Regular,
+        MontserratBold: Montserrat_700Bold,
+        MontserratSemibold: Montserrat_600SemiBold
+    });
+
 
     useEffect(() => {
 

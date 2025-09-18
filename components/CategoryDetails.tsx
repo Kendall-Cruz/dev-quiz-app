@@ -21,8 +21,8 @@ const CategoryDetails = ({ visible, onClose, category }: CategoryDetailsProps) =
                         style={{width: 120 , height: 120 , marginBottom:5}}
                         resizeMode="contain"
                     />
-                    <Text className="text-lg font-bold mb-2">{category.category}</Text>
-                    <Text className="text-center mb-4">{category.description}</Text>
+                    <Text className="text-lg font-montserratBold mb-2">{category.category}</Text>
+                    <Text className="text-center font-montserrat mb-4">{category.description}</Text>
                     <TouchableOpacity
                         onPress={onClose}
                         className="bg-blue-600 px-6 py-2 rounded"

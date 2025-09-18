@@ -37,7 +37,7 @@ const GameConfig = () => {
                 <View className=" mt-12 justify-center px-6">
 
                     {/* Categoría */}
-                    <Text className="text-white mb-2 text-lg font-semibold">Categoría</Text>
+                    <Text className="text-white mb-2 text-lg font-semibold font-montserratBold">Categoría</Text>
                     <Controller
                         control={control}
                         name="category"
@@ -65,7 +65,7 @@ const GameConfig = () => {
                     )}
 
                     {/* Dificultad */}
-                    <Text className="text-white mb-2 text-lg mt-10 font-semibold">Dificultad</Text>
+                    <Text className="text-white mb-2 text-lg mt-10 font-semibold font-montserratBold">Dificultad</Text>
                     <Controller
                         control={control}
                         name="difficulty"
@@ -94,11 +94,12 @@ const GameConfig = () => {
                         onPress={handleSubmit(onSubmit)}
                         className="bg-blue-500 py-4 rounded-md mx-5 mt-14"
                     >
-                        <Text className="text-center text-white font-bold text-xl">
+                        <Text className=" font-montserratBold text-center text-white text-lg">
                             Iniciar Juego
                         </Text>
                     </TouchableOpacity>
                 </View>
+
             </ScrollView>
         </SafeAreaView>
     )

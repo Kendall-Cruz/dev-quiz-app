@@ -59,7 +59,7 @@ const ScoreBoard = () => {
                                 key={item.category}
                                 className="flex-row justify-center items-center text-center p-10"
                             >
-                                <Text className="text-2xl text-white text-center font-semibold">
+                                <Text className="text-2xl text-white text-center font-montserratSemi">
                                     {item.category}
                                 </Text>
                                 <Image source={{ uri: item.icon }} className="w-8 h-8 mx-1" />
@@ -70,7 +70,7 @@ const ScoreBoard = () => {
                                     className={`py-3 px-5 mx-2 rounded-sm ${level === 1 ? "bg-[#273A57]" : "bg-gray-300"}`}
                                     onPress={() => setLevel(1)}
                                 >
-                                    <Text className={`text-center font-semibold text-base ${level === 1 ? "text-white" : "text-gray-700"}`}>
+                                    <Text className={`text-center font-montserratSemi text-base ${level === 1 ? "text-white" : "text-gray-700"}`}>
                                         Fácil
                                     </Text>
                                 </TouchableOpacity>
@@ -81,7 +81,7 @@ const ScoreBoard = () => {
                                     className={`py-3 px-5 mx-2 rounded-sm ${level === 2 ? "bg-[#273A57]" : "bg-gray-300"}`}
                                     onPress={() => setLevel(2)}
                                 >
-                                    <Text className={`text-center font-semibold text-base ${level === 2 ? "text-white" : "text-gray-700"}`}>
+                                    <Text className={`text-center font-montserratSemi text-base ${level === 2 ? "text-white" : "text-gray-700"}`}>
                                         Intermedio
                                     </Text>
                                 </TouchableOpacity>
@@ -92,7 +92,7 @@ const ScoreBoard = () => {
                                     className={`py-3 px-5 mx-2 rounded-sm ${level === 3 ? "bg-[#273A57]" : "bg-gray-300"}`}
                                     onPress={() => setLevel(3)}
                                 >
-                                    <Text className={`text-center font-semibold text-base ${level === 3 ? "text-white" : "text-gray-700"}`}>
+                                    <Text className={`text-center font-montserratSemi text-base ${level === 3 ? "text-white" : "text-gray-700"}`}>
                                         Difícil
                                     </Text>
                                 </TouchableOpacity>

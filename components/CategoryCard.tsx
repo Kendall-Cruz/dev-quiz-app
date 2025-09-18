@@ -15,7 +15,7 @@ const CategoryCard = ({ item , onPress }: Props) => {
                 style={{ width: 80, height: 80, borderRadius:4 }}
                 resizeMode="contain"
             />
-            <Text className="mt-3 text-center font-bold text-lg text-gray-800">
+            <Text className="mt-3 text-center text-lg text-gray-800 font-montserratBold">
                 {item.category}
             </Text>
         </Pressable>

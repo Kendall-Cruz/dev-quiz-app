@@ -132,25 +132,29 @@ const GameScreen = () => {
                         <Ionicons name="arrow-back" size={32} color='white' />
                     </Pressable>
 
-                    <View className="flex-row justify-between w-full px-4 mb-6 mt-6">
+                    <Animatable.View className="flex-row justify-between w-full px-4 mb-6 mt-6" animation='bounceInDown'>
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
-                            <Text className="text-white text-lg">Modo: <Text className="font-bold">{
+                            <Text className="text-white text-lg font-montserrat">Modo: <Text className="font-montserratBold">{
                                 currentQuestion?.level === 1 ? "Fácil" : currentQuestion?.level === 2 ? "Intermedio" : currentQuestion?.level === 3 ? "Difícil" : ""}
                             </Text></Text>
                         </View>
                         <View className=" bg-slate-700/40 rounded-xl px-4 py-2 shadow-sm">
-                            <Text className="text-white text-lg">Puntuación: <Text className="font-bold">{score}</Text></Text>
+                            <Text className="text-white text-lg font-montserrat">Puntuación: <Text className="font-montserratBold">{score}</Text></Text>
                         </View>
-                    </View>
+                    </Animatable.View>
 
-                    <Animatable.View key={currentQuestion?.question}
-                        animation='bounceInDown'
-                        className="bg-white rounded-lg p-6 my-6 py-20 w-full shadow-2xl border border-indigo-400"
+                    <Animatable.View
+                        key={currentQuestion?.question}
+                        animation="bounceInDown"
+                        className="bg-white rounded-lg p-6 my-6 py-20 w-full shadow-2xl border border-indigo-400 translate-y-[-5px] rotate-x-3 rotate-y-1"
                     >
-                        <Text className="text-center text-gray-800 text-lg leading-relaxed font-bold">
+                        <Text className="text-center text-gray-800 text-lg leading-relaxed font-montserratBold"
+                            adjustsFontSizeToFit
+                        >
                             {currentQuestion?.question}
                         </Text>
                     </Animatable.View>
+
 
                     {currentQuestion?.options && currentQuestion.options.map((option, index) => {
 
@@ -177,13 +181,13 @@ const GameScreen = () => {
                                     className={`rounded-xl py-5 px-6 mt-5 mb-3 w-full shadow-md ${optionStyle} border-blue-300 border-2`}
                                     onPress={() => checkAnswer(option)}
                                 >
-                                    <Text className="text-black text-center font-medium text-base">{option}</Text>
+                                    <Text className="text-black text-center font-medium text-lg font-montserratSemi" adjustsFontSizeToFit>{option}</Text>
                                 </TouchableOpacity>
                             </Animatable.View>
                         )
                     })}
                     <View className='mt-8'>
-                        <Text className="text-white text-lg text-center">Pregunta  <Text className='text-green-300'>{questionCounter}</Text>  de  {questionsFiltered.length}</Text>
+                        <Text className="text-white text-lg text-center font-montserratBold">Pregunta  <Text className='text-green-300 font-montserratBold'>{questionCounter}</Text>  de  {questionsFiltered.length}</Text>
                     </View>
                 </View>
 
