@@ -22,7 +22,7 @@ const LogoutButton = () => {
         className="mx-4"
       >
 
-        <Image style={{width:46 , height:46 , marginBottom: 6 , marginRight: 4}} source={require('../assets/images/secondary-logout-button.png')} />
+        <Image style={{width:46 , height:46 , marginRight: 4}} source={require('../assets/images/secondary-logout-button.png')} />
       </Pressable>
 
       <ModalInfo

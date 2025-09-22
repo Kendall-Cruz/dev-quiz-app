@@ -64,9 +64,9 @@ const ScoreBoard = () => {
                                     {/* Contenido central */}
                                     <View className="flex-row items-center">
                                         <Text className="text-2xl text-white text-center font-montserratSemi">
-                                            {item.category}
+                                            {item.category} a
                                         </Text>
-                                        <Image source={{ uri: item.icon }} className="w-8 h-8 mx-1" />
+                                        <Image source={{ uri: item.icon }} className="w-8 h-8 mx-2" />
                                     </View>
 
                                     {/* Icono de swipe a la derecha */}

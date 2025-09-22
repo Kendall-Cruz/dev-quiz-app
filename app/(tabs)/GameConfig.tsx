@@ -58,7 +58,7 @@ const GameConfig = () => {
                                         renderItem={(item) => (
                                             <View className="flex-row items-center p-4 border-b border-gray-100">
                                                 <View className="w-10 h-10 rounded-full items-center justify-center mr-3">
-                                                    <Image source={{ uri: item.icon }} className="w-6 h-6" />
+                                                    <Image source={{ uri: item.icon }} className="w-8 h-8" />
                                                 </View>
                                                 <Text className="text-gray-800 font-montserratSemi text-base">
                                                     {item.category}
