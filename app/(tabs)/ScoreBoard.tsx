@@ -64,7 +64,7 @@ const ScoreBoard = () => {
                                     {/* Contenido central */}
                                     <View className="flex-row items-center">
                                         <Text className="text-2xl text-white text-center font-montserratSemi">
-                                            {item.category} a
+                                            {item.category}
                                         </Text>
                                         <Image source={{ uri: item.icon }} className="w-8 h-8 mx-2" />
                                     </View>
