@@ -7,6 +7,7 @@ import { ICategory } from '@/interfaces/ICategory';
 import { IScoreBoardData } from '@/interfaces/IScoreBoardData';
 import { getTopTenUsers } from '@/services/UserScoreService';
 import ScoreTable from '@/components/ScoreTable';
+import LevelButton from '@/components/LevelButton';
 
 
 const ScoreBoard = () => {
@@ -80,39 +81,26 @@ const ScoreBoard = () => {
                                     )}
                                 </View>
                             </View>
-                            <View className='flex-row justify-center bg-white rounded-b-xl px-3 py-4 mx-4'>
-                                <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 1 ? "bg-[#273A57]" : "bg-gray-200"}`}
-                                    onPress={() => setLevel(1)}
-                                >
-                                    <Text className={`text-center font-montserratSemi text-base ${level === 1 ? "text-white" : "text-gray-700"}`}>
-                                        Fácil
-                                    </Text>
-                                </TouchableOpacity>
-
-                                <View className="h-px bg-gray-200 mx-4 my-2" />
-
-                                <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 2 ? "bg-[#273A57]" : "bg-gray-200"}`}
-                                    onPress={() => setLevel(2)}
-                                >
-                                    <Text className={`text-center font-montserratSemi text-base ${level === 2 ? "text-white" : "text-gray-700"}`}>
-                                        Intermedio
-                                    </Text>
-                                </TouchableOpacity>
-
-                                <View className="h-px bg-gray-200 mx-4 my-2" />
-
-                                <TouchableOpacity
-                                    className={`py-3 px-5 mx-2 rounded-lg ${level === 3 ? "bg-[#273A57]" : "bg-gray-200"}`}
-                                    onPress={() => setLevel(3)}
-                                >
-                                    <Text className={`text-center font-montserratSemi text-base ${level === 3 ? "text-white" : "text-gray-700"}`}>
-                                        Difícil
-                                    </Text>
-                                </TouchableOpacity>
+                            <View className="flex-row bg-white rounded-b-xl px-3 py-4 mx-4">
+                                <LevelButton
+                                    label="Fácil"
+                                    levelValue={1}
+                                    currentLevel={level}
+                                    onPress={setLevel}
+                                />
+                                <LevelButton
+                                    label="Intermedio"
+                                    levelValue={2}
+                                    currentLevel={level}
+                                    onPress={setLevel}
+                                />
+                                <LevelButton
+                                    label="Difícil"
+                                    levelValue={3}
+                                    currentLevel={level}
+                                    onPress={setLevel}
+                                />
                             </View>
-
 
                             {/* Tabla */}
                             {topTen === null ? (

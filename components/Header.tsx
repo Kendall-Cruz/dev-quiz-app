@@ -24,7 +24,6 @@ const Header = ({ title }: HeaderProps) => {
             </Text>
 
 
-
             <LogoutButton />
         </View>
     )
