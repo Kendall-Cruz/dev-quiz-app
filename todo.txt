@@ -1,0 +1,4 @@
+-Incluir fuente a las letras
+-Cambiar diseño de la selección de dificultad en puntuaciones
+-Cambiar botón de logout 
+-Cambiar iconos de tabs
